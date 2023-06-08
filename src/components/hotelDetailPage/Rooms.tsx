@@ -64,8 +64,8 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
   const { setIsOpenModalSignIn } = useOutletContext<IConTextRouter>();
   const [isOpenModalImages, setIsOpenModalImages] = React.useState<boolean>(false);
   const [isOpenModalAmenities, setIsOpenModalAmenities] = React.useState<boolean>(false);
-  const [imagesByRoom, setImagesByRoom] = React.useState<string[]>([]);
-  const [amenitiesByRoom, setAmenitiesByRoom] = React.useState<IAmenitiesImage[]>([]);
+  const amenitiesByRoomRef = React.useRef<IAmenitiesImage[]>([]);
+  const imagesByRoomRef = React.useRef<string[]>([]);
   const rooms = dateHotel.data.roomTypeIds;
 
   const { cart, status } = useSelector((state: RootState) => state.cart);
@@ -120,12 +120,12 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
 
   function handelOpenImages(i: number) {
     setIsOpenModalImages(true);
-    setImagesByRoom([...convertImagesRoom[i]]);
+    imagesByRoomRef.current = [...convertImagesRoom[i]];
   }
 
   function handelOpenAmenities(i: number) {
     setIsOpenModalAmenities(true);
-    setAmenitiesByRoom([...roomsAmenities[i]]);
+    amenitiesByRoomRef.current = [...roomsAmenities[i]];
   }
   const handelAddCart = (index: number) => {
     if (!is2FA) return setIsOpenModalSignIn(true);
@@ -376,12 +376,12 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
       <ModalImages
         isOpenModal={isOpenModalImages}
         setIsOpenModal={setIsOpenModalImages}
-        images={imagesByRoom}
+        images={imagesByRoomRef.current}
       />
       <ModalAmenities
         isOpenModal={isOpenModalAmenities}
         setIsOpenModal={setIsOpenModalAmenities}
-        amenities={amenitiesByRoom}
+        amenities={amenitiesByRoomRef.current}
       />
     </Stack>
   );
