@@ -59,7 +59,7 @@ function ModalPayment({
   const [isShowPw, setIsShowPw] = React.useState<boolean>(false);
   const [timeExpires, setTimeExpires] = React.useState<number>(time <= 0 ? 0 : time);
   const [isEmptyInput, setIsEmptyInput] = React.useState<boolean>(false);
-  const [password, setPassword] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('Tuan310797');
   const { status, errorPaymentBooking, targetBooking, statusPayment } = useSelector(
     (state: RootState) => state.payment
   );
@@ -172,7 +172,6 @@ function ModalPayment({
                 name='password'
                 label='Password'
                 onChange={handleChange}
-                defaultValue='tuan3107797'
                 type={isShowPw ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (

@@ -14,11 +14,13 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash/cloneDeep';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { debounce, isValidStartDate } from '@/utils/utils';
 import { urlImagesTrending } from '@/utils/images';
 import { IOrderRes } from '@/utils/interface';
 import DatePickerCustom from './DatePicker';
-import { useAppDispatch } from '@/app/store';
+import { RootState, useAppDispatch } from '@/app/store';
 import { fetchDeleteOrder, fetchUpdateOrder } from '@/reducer/cart/cart.slice';
 import { fDate } from '@/utils/formatTime';
 import { fetchCreateBooking } from '../payment/payment.slice';
@@ -42,23 +44,31 @@ function FormCart({
   ]);
   const [isErrorDate, setIsErrorDate] = React.useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const errorMessage = useSelector(
+    (state: RootState) => state.payment.errorMessageCreateBooking
+  );
   const updateOrder = cloneDeep(order);
+  const navigate = useNavigate();
+  const indexOrderCreateBookingRef = React.useRef<boolean>(false);
 
   const handelBooking = () => {
-    dispatch(
-      fetchCreateBooking({
-        newBooking: {
-          rooms: order.rooms,
-          hotelId: order.hotelId,
-          total: totalOrder,
-          startDate: order.startDate,
-          endDate: order.endDate,
-          createdAt: order.createdAt,
-          duration: 0,
-        },
-        i,
-      })
-    );
+    if (!indexOrderCreateBookingRef.current) {
+      dispatch(
+        fetchCreateBooking({
+          newBooking: {
+            rooms: order.rooms,
+            hotelId: order.hotelId,
+            total: totalOrder,
+            startDate: order.startDate,
+            endDate: order.endDate,
+            createdAt: order.createdAt,
+            duration: 0,
+          },
+          i,
+        })
+      );
+    }
+    indexOrderCreateBookingRef.current = true;
   };
 
   const handelChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
@@ -154,16 +164,10 @@ function FormCart({
               onChangeDate={handelChangeTimeStay}
             />
           </Box>
-          <IconButton
-            onClick={() => handelDeleteOrder(i)}
-            sx={{ position: 'absolute', top: 1, right: 1 }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <Box
+          <Stack
+            spacing={1}
             sx={{
-              minWidth: 200,
-              display: 'flex',
+              minWidth: 300,
               alignItems: 'center',
               justifyContent: 'center',
               flexDirection: 'column',
@@ -173,13 +177,27 @@ function FormCart({
               Estimated price:
               <Typography component='span' variant='h4' color='primary.dark'>
                 {' '}
-                {Math.ceil(totalOrder)}
+                {Math.round((totalOrder + Number.EPSILON) * 100) / 100}
               </Typography>
             </Typography>
-            <Button onClick={() => handelBooking()} disabled={isDisable || isErrorDate}>
-              BOOK NOW
+            <Button
+              variant='contained'
+              sx={{ mt: 1 }}
+              onClick={() => handelBooking()}
+              disabled={isDisable || isErrorDate}
+            >
+              Reserve
             </Button>
-          </Box>
+            {errorMessage && indexOrderCreateBookingRef.current && (
+              <Button
+                variant='outlined'
+                onClick={() => navigate('/account?tab=Account')}
+                sx={{ maxWidth: 200, fontSize: 12 }}
+              >
+                It`s very cheap, recharge now 😜
+              </Button>
+            )}
+          </Stack>
         </Stack>
       </Box>
       <Divider />
@@ -213,6 +231,12 @@ function FormCart({
             </Grid>
           ))}
         </Grid>
+        <IconButton
+          onClick={() => handelDeleteOrder(i)}
+          sx={{ position: 'absolute', top: 1, right: 1 }}
+        >
+          <CloseIcon />
+        </IconButton>
       </Box>
     </Stack>
   );

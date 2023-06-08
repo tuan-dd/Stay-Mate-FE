@@ -13,9 +13,10 @@ const styleButton = {
   display: 'flex',
   justifyContent: 'center',
   alignContent: 'center',
+  color: 'primary.dark',
   top: '45%',
   right: '0',
-  opacity: 0.5,
+  opacity: 0.9,
   ':hover': {
     opacity: 1,
   },
@@ -39,9 +40,9 @@ function ModalImages({
       disableGutters
       sx={{ height: 600, width: 700, p: 0, border: 'none' }}
     >
-      <IconClose setClose={setIsOpenModal} />
+      <IconClose setClose={setIsOpenModal} size='small' />
       <IconButton
-        sx={{ ...styleButton, right: '94%' }}
+        sx={{ ...styleButton, right: '93%' }}
         onClick={() => setIndex((e) => (e === 0 ? images.length - 1 : e - 1))}
       >
         <ArrowBackIosIcon sx={{ fontSize: 30 }} />

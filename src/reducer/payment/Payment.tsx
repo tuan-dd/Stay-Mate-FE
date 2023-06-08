@@ -14,7 +14,7 @@ const tabs = [
   { name: 'pending', statusPayment: EStatusIBooking.PENDING },
   { name: 'paid', statusPayment: EStatusIBooking.SUCCESS },
   { name: 'stayed', statusPayment: EStatusIBooking.STAY },
-  { name: 'decline', statusPayment: EStatusIBooking.DECLINE },
+  { name: 'unpaid', statusPayment: EStatusIBooking.DECLINE },
   { name: 'cancel', statusPayment: EStatusIBooking.CANCEL },
 ];
 
@@ -37,9 +37,7 @@ function Payment() {
   const index = tabs.findIndex((tab) => tab.name === statusBooking);
 
   React.useEffect(() => {
-    if (statusBooking === 'paid') {
-      dispatch(fetchGetBookings({ page: 1, status: EStatusIBooking.SUCCESS }));
-    } else if (index > -1) {
+    if (index > -1) {
       dispatch(fetchGetBookings({ page: 1, status: tabs[index].statusPayment }));
     }
     setPage(1);

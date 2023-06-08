@@ -51,7 +51,7 @@ function CardBooking({ booking, i }: { booking: IBookingResCustom; i: number }) 
     <Card>
       <Stack>
         <Stack flexDirection='row'>
-          <Box width={300} height={250}>
+          <Box width={300} height={300}>
             <img
               src={urlImagesTrending[i]}
               alt={booking.hotelId.hotelName}
