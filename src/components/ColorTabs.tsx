@@ -51,7 +51,7 @@ export default function ColorTabs({
               label={tab.name}
               icon={
                 <Badge
-                  color='success'
+                  color='error'
                   badgeContent={numberBadge[i] || 0}
                   anchorOrigin={{
                     vertical: 'top',

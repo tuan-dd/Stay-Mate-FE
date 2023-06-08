@@ -102,7 +102,7 @@ function AccountPage() {
         <Card
           sx={{
             minWidth: 400,
-            pl: 25,
+            pl: 15,
             border: 'none',
             borderRadius: '0px',
             bgcolor: 'rgba(1, 170, 228, 0.4)',
@@ -116,7 +116,7 @@ function AccountPage() {
             handleChange={handleChange}
             orientation='vertical'
             sx={{ borderRight: 1, borderColor: 'divider', minHeight: 300 }}
-            sxTab={{ fontSize: 20, minHeight: 70, p: 0 }}
+            sxTab={{ fontSize: 20, minHeight: 70, pl: 10 }}
           />
         </Card>
         {tabs.map(
