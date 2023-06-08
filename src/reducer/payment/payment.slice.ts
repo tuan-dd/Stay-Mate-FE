@@ -218,7 +218,7 @@ export const fetchCreateBooking = createAppAsyncThunk(
         response.data.data.hotelId = newBooking.hotelId;
         response.data.data.rooms = newBooking.rooms;
       }
-      if (i) dispatch(removeCartAfterCreateBooking(i));
+      if (typeof i === 'number') dispatch(removeCartAfterCreateBooking(i));
       return response.data.data;
     } catch (error: any) {
       return rejectWithValue(error.message as string);
