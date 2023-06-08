@@ -33,6 +33,10 @@ function ModalImages({
 }) {
   const [index, setIndex] = React.useState<number>(0);
 
+  React.useEffect(() => {
+    setIndex(0);
+  }, [images]);
+
   return (
     <BasicModal
       open={isOpenModal}

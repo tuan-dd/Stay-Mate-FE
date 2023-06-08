@@ -32,7 +32,7 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
   async function getReviews() {
     try {
       const response = await apiService.get<IResponse<IReview[]>>(
-        `/review?hotelId=${idHotel}&page=${page}&limit=10`
+        `/review?hotelId=${idHotel}&page=${page}&limit=3`
       );
 
       if (response.data.data) {
@@ -106,13 +106,15 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                       <ImageList cols={3} rowHeight={130} sx={{ mt: 2 }}>
                         {review.images.slice(0, 3).map((image, index) => (
                           <ImageListItem key={index} cols={1} rows={1}>
-                            <img
-                              src={image}
-                              alt={review.hotel.name}
-                              loading='lazy'
-                              width='50px'
-                              height='50px'
-                            />
+                            <Box height='90%'>
+                              <img
+                                src={image}
+                                alt={review.hotel.name}
+                                loading='lazy'
+                                width='100%'
+                                height='100%'
+                              />
+                            </Box>
                           </ImageListItem>
                         ))}
                       </ImageList>
