@@ -32,7 +32,7 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
   async function getReviews() {
     try {
       const response = await apiService.get<IResponse<IReview[]>>(
-        `/review?hotelId=${idHotel}&page=${page}&limit=10`
+        `/review?hotelId=${idHotel}&page=${page}&limit=3`
       );
 
       if (response.data.data) {

@@ -4,8 +4,8 @@ import { Box, Card, Stack } from '@mui/material';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LuggageIcon from '@mui/icons-material/Luggage';
 import RateReviewIcon from '@mui/icons-material/RateReview';
-import { useSearchParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { shallowEqual, useSelector } from 'react-redux';
 import User from '@/reducer/user/User';
 import Payment from '@/reducer/payment/Payment';
 import Review from '@/reducer/review/Review';
@@ -41,12 +41,15 @@ const tabs = [
 function AccountPage() {
   const [searchParams] = useSearchParams();
   const tabQuery = searchParams.get('tab');
-
+  const navigate = useNavigate();
   const [nameComponent, setNameComponent] = React.useState<string>(
     tabQuery || tabs[0].name
   );
+
   const [isOpenModalPayment, setIsOpenModalPayment] = React.useState<boolean>(false);
   const bookingRef = React.useRef<IBookingRes | null>(null);
+
+  const is2FA = useSelector((state: RootState) => state.auth.is2FA, shallowEqual);
 
   const { targetBooking, isCreateBookingSuccess, statusPayment, count } = useSelector(
     (state: RootState) => state.payment
@@ -95,6 +98,12 @@ function AccountPage() {
   if (!review.isReview) {
     numberReviewsRef.current = review.count;
   }
+
+  React.useEffect(() => {
+    if (!is2FA) {
+      navigate('/');
+    }
+  }, [is2FA]);
 
   return (
     <Container maxWidth={false} disableGutters>

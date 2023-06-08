@@ -281,11 +281,14 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
                 {room.nameOfRoom}
               </Typography>
               <Grid container spacing={1} alignItems='center'>
-                {room.rateDescription?.split(',').map((e) => (
-                  <Grid item xs={6} key={e}>
-                    <Chip label={e} sx={{ width: '100%', mx: 'auto' }} />
-                  </Grid>
-                ))}
+                {room.rateDescription
+                  ?.split(',')
+                  .slice(0, 6)
+                  .map((e) => (
+                    <Grid item xs={6} key={e}>
+                      <Chip label={e} sx={{ width: '100%', mx: 'auto' }} />
+                    </Grid>
+                  ))}
               </Grid>
               {room.mealType && (
                 <Typography
