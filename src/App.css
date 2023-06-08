@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'UseUrban';
+  src: url(./fonts/ZilapOrionPersonalUseUrban-qVJq.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'useLinear';
+  src: url(./fonts/ZilapOrionPersonalUseLinear-AzAg.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'UseFuturistic';
+  src: url(./fonts/ZilapOrionPersonalUseFuturistic-DzA3.ttf) format('truetype');
+}
+body {
+  /* overflow-x: hidden; */
+}
