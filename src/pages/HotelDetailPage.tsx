@@ -20,7 +20,7 @@ import { urlImagesRooms, urlImagesRoomsLove } from '@utils/images';
 import { IHotel, IRoom } from '@utils/interface';
 import BasicSpeedDial from '@components/SpeedDial';
 import FormSearchHotels from '@components/FormSearchHotels';
-import { getDeleteFilter, throttle } from '@/utils/utils';
+import { createToast, getDeleteFilter, throttle } from '@/utils/utils';
 
 export interface IParams {
   country?: string;
@@ -51,6 +51,7 @@ function HotelDetailPage() {
   const [isModalImagesOpen, setIsModalImagesOpen] = React.useState<boolean>(false);
   const [positionPage, setPositionPage] = React.useState<string>(element[0].name);
   const [isSpeedHidden, setIsSpeedHidden] = React.useState<boolean>(true);
+  const alertAfterUpdateRef = React.useRef<number>(0);
   const objectParams: Omit<IDataHotelDetail, string> = getDeleteFilter(
     ['data', 'country', 'city', 'destination'],
     dateHotel
@@ -96,7 +97,7 @@ function HotelDetailPage() {
   React.useEffect(() => {
     const evenListener = () => {
       const heightScroll = window.scrollY + window.innerHeight;
-      return heightScroll > (document.documentElement.scrollHeight * 10) / 20
+      return heightScroll > (document.documentElement.scrollHeight * 8) / 20
         ? setIsSpeedHidden(false)
         : setIsSpeedHidden(true);
     };
@@ -131,6 +132,13 @@ function HotelDetailPage() {
     });
     return a;
   }, []);
+
+  React.useEffect(() => {
+    if (alertAfterUpdateRef.current > 1) {
+      createToast('update success', 'success');
+    }
+    alertAfterUpdateRef.current += 1;
+  }, [dateHotel]);
 
   return (
     <Stack padding={10} px={15} spacing={3} position='relative' pt={15}>

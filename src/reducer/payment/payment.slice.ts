@@ -98,6 +98,7 @@ export const paymentSlice = createSlice({
     builder.addCase(fetchCreateBooking.fulfilled, (state, action) => {
       state.status = EStatusRedux.succeeded;
       state.isCreateBookingSuccess = true;
+      state.count -= 1;
       const newBooking = action.payload;
 
       state.targetBooking = newBooking;

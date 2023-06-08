@@ -119,7 +119,8 @@ function Overview({
         <Card sx={{ border: 'solid 0.5px' }}>
           <CardContent>
             <Typography color='primary.dark' variant='h4'>
-              Star Rating: {hotel.starRating?.starAverage}
+              Star Rating:{' '}
+              {Math.round((hotel.starRating.starAverage + Number.EPSILON) * 100) / 100}
             </Typography>
             <Typography variant='body2'>
               reviews: {hotel.starRating?.countReview}

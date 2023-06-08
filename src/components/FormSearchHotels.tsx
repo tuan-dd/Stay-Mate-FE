@@ -74,10 +74,20 @@ const inputValue = z
     }
   );
 
+const startDate =
+  dayjs().hour() > 22
+    ? fDate(new Date(new Date().getTime() + 1000 * 60 * 60 * 24))
+    : fDate(new Date());
+
+const endDate =
+  dayjs().hour() > 22
+    ? fDate(new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 2))
+    : fDate(new Date(new Date().getTime() + 1000 * 60 * 60 * 24));
+
 const defaultValues: DefaultValues = {
   destination: cites[0],
-  startDate: fDate(new Date()),
-  endDate: fDate(new Date(new Date().getTime() + 1000 * 60 * 60 * 24)),
+  startDate,
+  endDate,
   rooms: '1',
   adults: '2',
   children: '0',
@@ -144,7 +154,7 @@ function FormSearchHotels() {
       return navigate(`/hotel/${hotelId}?${params}`);
     }
     const params = new URLSearchParams(data).toString();
-    // console.log(params);
+
     return navigate(`/search?${params}`);
   };
 

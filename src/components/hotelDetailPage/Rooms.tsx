@@ -12,7 +12,7 @@ import CardCover from '@mui/joy/CardCover/CardCover';
 import { z } from 'zod';
 import CheckIcon from '@mui/icons-material/Check';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Alert, Divider, TextField, Chip, Grid } from '@mui/material';
+import { Divider, TextField, Chip, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { EStatusRedux } from '@/utils/enum';
@@ -178,12 +178,12 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
           }}
         >
           <Stack flexDirection='row' columnGap={2} alignItems='center'>
-            <Stack minWidth='500px' alignItems='center'>
+            <Stack maxWidth={500} minWidth={400} alignItems='center'>
               <ImageList
                 variant='quilted'
                 cols={2}
                 rowHeight={80}
-                sx={{ m: 0, width: 500 }}
+                sx={{ m: 0, width: '100%' }}
               >
                 {convertImagesRoom[i].slice(0, 3).map((item, index) => (
                   <ImageListItem
@@ -273,7 +273,7 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
             >
               <Typography
                 gutterBottom
-                variant='h3'
+                variant='h4'
                 textTransform='uppercase'
                 color='primary.main'
                 textAlign='center'
@@ -282,13 +282,18 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
               </Typography>
               <Grid container spacing={1} alignItems='center'>
                 {room.rateDescription?.split(',').map((e) => (
-                  <Grid item xs={4} key={e}>
+                  <Grid item xs={6} key={e}>
                     <Chip label={e} sx={{ width: '100%', mx: 'auto' }} />
                   </Grid>
                 ))}
               </Grid>
               {room.mealType && (
-                <Typography variant='body1' color='primary.dark' mt={1}>
+                <Typography
+                  textAlign='center'
+                  variant='body1'
+                  color='primary.dark'
+                  mt={1}
+                >
                   Extra: {room.mealType}
                 </Typography>
               )}
@@ -296,7 +301,9 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
             <Divider orientation='vertical' flexItem />
             <CardActions>
               <Stack alignItems='center' spacing={2} width={220}>
-                <Typography variant='h4'>{room.price} $ / room</Typography>
+                <Typography variant='h4'>
+                  {Math.round((room.price + Number.EPSILON) * 100) / 100} $ / room
+                </Typography>
                 <TextField
                   defaultValue={
                     parseInt(dateHotel.rooms, 10) <= room.numberOfRoom
@@ -310,7 +317,16 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
                   }
                   id={`input${i}`}
                   type='number'
-                  sx={{ maxWidth: 200, width: 70 }}
+                  sx={{
+                    maxWidth: 200,
+                    width: 70,
+                    '.MuiFormHelperText-root': {
+                      textAlign: 'start',
+                      width: 200,
+                      ml: -8,
+                      mt: 1,
+                    },
+                  }}
                   inputProps={{ min: 1, max: room.numberOfRoom, step: 1 }}
                   label='Order'
                   helperText={
@@ -341,9 +357,13 @@ export default function Rooms({ dateHotel }: { dateHotel: IDataHotelDetail }) {
                 </LoadingButton>
 
                 {errorMessageCreateBooking && indexRoomCreateBookingRef.current === i && (
-                  <Alert severity='error' sx={{ bgcolor: 'transparent' }}>
-                    {errorMessageCreateBooking}
-                  </Alert>
+                  <Button
+                    variant='outlined'
+                    onClick={() => navigate('/account?tab=Account')}
+                    sx={{ maxWidth: 200, fontSize: 12 }}
+                  >
+                    It`s very cheap, recharge now 😜
+                  </Button>
                 )}
               </Stack>
             </CardActions>

@@ -33,7 +33,7 @@ function MainFooter() {
         <Typography variant='h5' align='center' pb={2}>
           {'Copyright © 2022 '}
           <Link color='inherit' href='tuandd.310797@gmail.com'>
-            Make by Anh Tuấn
+            Make by Anh Tuấn{' '}
           </Link>
           {new Date().getFullYear()}
         </Typography>

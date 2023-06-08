@@ -72,10 +72,19 @@ function MainHeader({
       setAnchorElUser(null);
     } else if (setting === 'Logout') {
       dispatch(fetchSignOut());
+      navigate('/');
     } else {
       navigate(`${setting.toLowerCase()}`);
     }
     setAnchorElUser(null);
+  };
+
+  const handelClickBalance = () => {
+    if (currentUser) {
+      navigate('/account?tab=Account');
+    } else {
+      setIsOpenModalSignIn(true);
+    }
   };
 
   React.useEffect(() => {
@@ -256,11 +265,12 @@ function MainHeader({
                 )}
               </Stack>
             </Tooltip>
-            <Button onClick={() => navigate('/account?tab=Account')}>
+            <Button onClick={handelClickBalance}>
               <Typography
-                fontWeight={600}
-                color='success.light'
+                fontWeight={900}
+                color='rgb(155, 70, 201)'
                 fontSize={24}
+                fontFamily='monospace'
                 sx={{ filter: 'brightness(1.25)' }}
               >
                 {Math.round(

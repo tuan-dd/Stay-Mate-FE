@@ -69,7 +69,6 @@ function SearchPage() {
   const isFinishGetDaTaRef = React.useRef(true);
   const isFetchNoData = React.useRef<boolean>(false);
   const refCheckValue = React.useRef<IDataWatch>(defaultValues);
-
   const objectParams: TProsLodash<any> = React.useMemo(
     () => getDeleteFilter(['result'], loaderData),
     [loaderData]

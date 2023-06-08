@@ -58,7 +58,7 @@ export const reviewSlice = createSlice({
         state.reviews[index].images = images || [];
         state.reviews[index].starRating = starRating;
         state.reviews[index].context = context;
-
+        state.count -= 1;
         createToast('Thank you for review', 'success');
       }
     });

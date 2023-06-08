@@ -163,7 +163,9 @@ function CardHotel({
                     fontWeight='600'
                     color='success.light'
                   >
-                    {(hotel.starRating.starAverage / 5) * 10}
+                    {Math.round(
+                      ((hotel.starRating.starAverage / 5) * 10 + Number.EPSILON) * 100
+                    ) / 100}
                   </Typography>
                 </Typography>
                 {hotel.starRating.countReview > 0 ? (
@@ -181,7 +183,7 @@ function CardHotel({
                 <Typography component='span' variant='body2'>
                   Lowest room rate:
                 </Typography>
-                &nbsp;{!priceSmallest ? 40 : priceSmallest}$
+                &nbsp;{Math.round((priceSmallest + Number.EPSILON) * 100) / 100}$
               </Typography>
             </Stack>
           </Box>
