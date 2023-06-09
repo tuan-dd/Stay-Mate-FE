@@ -107,7 +107,7 @@ const PRIMARY = {
   dark: '#e76993',
   darker: 'rgba(198, 148, 9, 0.4)',
   contrastText: '#0b0b0b',
-  black: '#743636',
+  black: '#f25c90',
 };
 const SECONDARY = {
   lighter: '#D6E4FF',
@@ -152,6 +152,9 @@ declare module '@mui/material/styles' {
     lighter: string;
     darker: string;
     black: string;
+  }
+  interface PaletteColorChannel {
+    main: string;
   }
 }
 

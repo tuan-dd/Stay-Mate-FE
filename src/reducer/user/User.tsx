@@ -14,7 +14,7 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { LoadingButton } from '@mui/lab';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -315,7 +315,11 @@ function User() {
           </Box>
           {currentUser?.account.balance && (
             <Typography variant='h5'>
-              Your balance {Math.round(currentUser?.account.balance)} $
+              Your balance{' '}
+              {Math.round(
+                ((currentUser?.account.balance as number) + Number.EPSILON) * 100
+              ) / 100}{' '}
+              $
             </Typography>
           )}
         </Stack>

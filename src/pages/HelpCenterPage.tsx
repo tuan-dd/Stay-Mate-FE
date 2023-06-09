@@ -1,4 +1,5 @@
-import { Box, Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 
 import CardOpen from '@/components/CardOpen';
 

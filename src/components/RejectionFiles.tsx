@@ -1,6 +1,8 @@
-import { Box, Typography, Paper } from '@mui/material';
 import { alpha } from '@mui/material/styles';
 import { FileRejection } from 'react-dropzone';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 import { fData } from '../utils/numberFormat';
 
 function RejectionFiles({ fileRejections }: { fileRejections: FileRejection[] }) {

@@ -3,7 +3,7 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { IconButton } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import BasicModal from './BasicModal';
 import { IconClose } from './ModalVoucherNewUser';
 

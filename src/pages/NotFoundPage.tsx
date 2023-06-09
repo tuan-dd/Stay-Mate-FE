@@ -1,6 +1,5 @@
-// import React from 'react';
-
-import { Stack, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 
 function NotFoundPage() {
   return (

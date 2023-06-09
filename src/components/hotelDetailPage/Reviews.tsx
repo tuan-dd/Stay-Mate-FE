@@ -9,10 +9,11 @@ import Divider from '@mui/material/Divider';
 import cloneDeep from 'lodash/cloneDeep';
 import Card from '@mui/material/Card';
 import dayjs from 'dayjs';
-import { ImageList, ImageListItem } from '@mui/material';
-import { IResponse, IReview } from '@/utils/interface';
-import apiService from '@/app/server';
-import { fToNow } from '@/utils/formatTime';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageList from '@mui/material/ImageList';
+import { IResponse, IReview } from '@utils/interface';
+import apiService from '@app/server';
+import { fToNow } from '@utils/formatTime';
 import ModalImages from '../modal/ModalImages';
 
 interface IReviewAndReplies extends IReview {

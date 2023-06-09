@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import * as React from 'react';
-import { IconButton, styled, IconButtonProps } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -68,7 +69,7 @@ export default function ModalVoucherNewUser({
         <img
           onClick={handelClose}
           height='100%'
-          src='/Voucher_Cute_Animal.png'
+          src='https://res.cloudinary.com/diz2mh63x/image/upload/v1686300156/Voucher_Cute_Animal_a6zhvp.png'
           alt='voucher'
           width='100%'
         />

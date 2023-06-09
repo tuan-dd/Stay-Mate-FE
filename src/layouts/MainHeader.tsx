@@ -10,7 +10,8 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { Badge, Stack } from '@mui/material';
+import Badge from '@mui/material/Badge';
+import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
@@ -150,7 +151,7 @@ function MainHeader({
               fontFamily: 'UseUrban',
               fontWeight: 700,
               letterSpacing: '.3rem',
-              color: (theme) => theme.palette.primary.dark,
+              color: 'primary.dark',
               textDecoration: 'none',
             }}
           >
@@ -225,7 +226,7 @@ function MainHeader({
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
-              color: (theme) => theme.palette.primary.dark,
+              color: 'primary.dark',
               flexGrow: 1,
               fontFamily: 'UseUrban',
               fontWeight: 700,
@@ -261,7 +262,12 @@ function MainHeader({
                   />
                 </IconButton>
                 {currentUser?.name && (
-                  <Typography color='black'>{currentUser?.name}</Typography>
+                  <Typography
+                    fontFamily='monospace'
+                    sx={{ filter: ' brightness(1.75)', fontWeight: 600 }}
+                  >
+                    {currentUser?.name}
+                  </Typography>
                 )}
               </Stack>
             </Tooltip>

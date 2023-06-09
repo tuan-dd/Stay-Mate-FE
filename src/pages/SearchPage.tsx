@@ -6,13 +6,15 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import FromSearchFilter from '@components/searchPage/FromSearchFilter';
 import FormSearchHotels from '@components/FormSearchHotels';
 import { FormProvider } from '@components/formProvider';
 import CardHotel from '@components/searchPage/CardHotel';
-import { IParams } from './HotelDetailPage';
-import { IHotel, IResponse, IRoom } from '@/utils/interface';
+import { IHotel, IResponse, IRoom } from '@utils/interface';
+import apiService from '@app/server';
+import LinearLoading from '@components/LinearLoading';
+import { IResponseGetHotels } from '@utils/loader';
 import {
   Pros,
   TProsLodash,
@@ -20,9 +22,7 @@ import {
   getDeleteFilter,
   throttle,
 } from '@/utils/utils';
-import apiService from '@/app/server';
-import LinearLoading from '@/components/LinearLoading';
-import { IResponseGetHotels } from '@/utils/loader';
+import { IParams } from './HotelDetailPage';
 // import { IHotel, IResponse, cites } from './interface';
 // import { IParams } from '@/pages/HotelDetailPage';
 

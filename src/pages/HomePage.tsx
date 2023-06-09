@@ -10,7 +10,8 @@ function HomePage() {
         justifyContent='center'
         sx={{
           height: '55vh',
-          backgroundImage: 'url(logo_3.jpg)',
+          backgroundImage:
+            'url(https://res.cloudinary.com/diz2mh63x/image/upload/v1686300155/logo_3_zvo3cy.jpg)',
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           borderRadius: 'none',
