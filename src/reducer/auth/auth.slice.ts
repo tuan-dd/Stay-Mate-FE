@@ -2,12 +2,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookie from 'js-cookie';
 import jwtDecode from 'jwt-decode';
-import { IUser, IResponse, JwtPayloadUser } from '@/utils/interface';
-import { setAllCookie, setHeaders, setKeyHeader } from '@/utils/jwt';
-import apiService from '@/app/server';
-import { EKeyHeader, EStatusRedux } from '@/utils/enum';
+import { IUser, IResponse, JwtPayloadUser } from '@utils/interface';
+import { setAllCookie, setHeaders, setKeyHeader } from '@utils/jwt';
+import apiService from '@app/server';
+import { EKeyHeader, EStatusRedux } from '@utils/enum';
+import { AppDispatch, RootState } from '@app/store';
 import { fetchUser, logOut, setUser } from '../user/user.slice';
-import { AppDispatch, RootState } from '@/app/store';
 
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: RootState;

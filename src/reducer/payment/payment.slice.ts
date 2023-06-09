@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { updateBalance } from '../user/user.slice';
-import apiService from '@/app/server';
-import { IResponse, IBookingRes } from '@/utils/interface';
-import { EStatusIBooking, EStatusRedux } from '@/utils/enum';
+import apiService from '@app/server';
+import { IResponse, IBookingRes } from '@utils/interface';
+import { EStatusIBooking, EStatusRedux } from '@utils/enum';
+import { createToast } from '@utils/utils';
 import { removeCartAfterCreateBooking } from '../cart/cart.slice';
 import { createAppAsyncThunk } from '../auth/auth.slice';
-import { createToast } from '@/utils/utils';
+import { updateBalance } from '../user/user.slice';
 
 export interface IBookingResCustom extends IBookingRes {
   errorMessage?: string;

@@ -1,5 +1,5 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { FormHelperText } from '@mui/material';
+import FormHelperText from '@mui/material/FormHelperText';
 import { DropzoneOptions } from 'react-dropzone';
 import UploadAvatar from '../UploadAvatar';
 import { PropsForm } from '@/utils/interface';

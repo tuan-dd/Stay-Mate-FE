@@ -1,6 +1,8 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import { Box, Card, Stack } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LuggageIcon from '@mui/icons-material/Luggage';
 import RateReviewIcon from '@mui/icons-material/RateReview';

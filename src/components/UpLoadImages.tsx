@@ -2,7 +2,11 @@ import isString from 'lodash/isString';
 import { DropzoneOptions, useDropzone } from 'react-dropzone';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
-import { Stack, SxProps, Typography, Grid, IconButton } from '@mui/material';
+import { SxProps } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 
 import RejectionFiles from './RejectionFiles';

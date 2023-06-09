@@ -1,4 +1,6 @@
-import { Stack, Typography, Button } from '@mui/material';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { FAutocomplete, FTextField, FormProvider } from '@/components/formProvider';

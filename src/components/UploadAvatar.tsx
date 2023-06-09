@@ -1,8 +1,10 @@
 import isString from 'lodash/isString';
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
-import { Typography, Box, SxProps } from '@mui/material';
+import { SxProps } from '@mui/material';
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import { styled, alpha } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import RejectionFiles from './RejectionFiles';
 
 const RootStyle = styled('div')(({ theme }) => ({

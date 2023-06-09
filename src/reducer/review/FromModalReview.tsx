@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Stack, Box } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import { z } from 'zod';
@@ -9,7 +10,7 @@ import { FTextField, FUploadImages, FormProvider } from '@components/formProvide
 import BasicModal from '@components/modal/BasicModal';
 import { IReview } from '@utils/interface';
 import { EStatusRedux } from '@utils/enum';
-import { RootState, useAppDispatch } from '@/app/store';
+import { RootState, useAppDispatch } from '@app/store';
 import { fetchCreateReview, fetchUpdateReview } from './review.slice';
 
 interface IDefaultValues {

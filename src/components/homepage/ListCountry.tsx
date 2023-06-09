@@ -1,12 +1,15 @@
 import Stack from '@mui/material/Stack';
 import React from 'react';
-import { Box, Container, IconButton, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
-import { useColorScheme } from '@mui/joy/styles';
+import { useColorScheme, useTheme } from '@mui/joy/styles';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { urlCountryLight, nameCountry, urlCountryDark } from '@/utils/images';
-import { fDate } from '@/utils/formatTime';
+import { urlCountryLight, nameCountry, urlCountryDark } from '@utils/images';
+import { fDate } from '@utils/formatTime';
 
 const convertObjectParams = (name: string) => ({
   country: name,
@@ -25,16 +28,23 @@ const styleArrow = {
   alignContent: 'center',
   height: '40px',
   width: '40px',
-  bgcolor: 'white',
+  bgcolor: ' rgba(255, 255, 255, 0.305)',
   p: 0,
   opacity: 0.9,
   ':hover': {
     opacity: 1,
   },
 };
+const customCss = {
+  position: 'absolute',
+  height: '100%',
+  width: 60,
+  top: 0,
+};
 
 function ListCountry() {
   const { mode } = useColorScheme();
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const handelClickCity = (index: number) => {
@@ -62,6 +72,14 @@ function ListCountry() {
 
   return (
     <Container sx={{ maxWidth: 1200, mt: 10, position: 'relative' }} disableGutters>
+      <Box
+        sx={{
+          ...customCss,
+          background: `linear-gradient(to left, rgba(255, 255, 255, 0),${theme.vars.palette.background.default})`,
+          left: 0,
+        }}
+      />
+
       <Typography
         textAlign='center'
         variant='h4'
@@ -83,6 +101,7 @@ function ListCountry() {
           sx={{
             fontSize: 20,
             color: 'black',
+            opacity: 0.5,
           }}
         />
       </IconButton>
@@ -135,9 +154,17 @@ function ListCountry() {
           sx={{
             fontSize: 20,
             color: 'black',
+            opacity: 0.5,
           }}
         />
       </IconButton>
+      <Box
+        sx={{
+          ...customCss,
+          background: `linear-gradient(to right, rgba(255, 255, 255, 0), ${theme.vars.palette.background.default})`,
+          right: 0,
+        }}
+      />
     </Container>
   );
 }

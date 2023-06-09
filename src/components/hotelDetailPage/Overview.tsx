@@ -7,7 +7,6 @@ import Box from '@mui/system/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
-
 import Divider from '@mui/material/Divider';
 import { IHotel, IRoom } from '@/utils/interface';
 import { nameIcons, urlIcons } from '@/utils/images';

@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
-import { Box, Stack, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import ColorTabs from '@/components/ColorTabs';
 import { EStatusIBooking } from '@/utils/enum';
 import { RootState, useAppDispatch } from '@/app/store';

@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { RootState, useAppDispatch } from '@/app/store';
 import ColorTabs from '@/components/ColorTabs';
 import CardReview from './CardReview';

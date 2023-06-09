@@ -12,7 +12,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import { LoadingButton } from '@mui/lab';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { FAutocomplete, FTextField, FormProvider } from './formProvider';
 import { cites } from '@/utils/enum';
 import FDatePicker from '@/components/formProvider/FDatePicker';
