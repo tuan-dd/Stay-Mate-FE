@@ -1,11 +1,8 @@
 import React, { useMemo } from 'react';
-import { useLoaderData, Link as LinkRouter } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { z } from 'zod';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
@@ -20,7 +17,9 @@ import { urlImagesRooms, urlImagesRoomsLove } from '@utils/images';
 import { IHotel, IRoom } from '@utils/interface';
 import BasicSpeedDial from '@components/SpeedDial';
 import FormSearchHotels from '@components/FormSearchHotels';
+import { styled } from '@mui/material/styles';
 import { createToast, getDeleteFilter, throttle } from '@/utils/utils';
+import BreadcrumbsDetail from '@/components/hotelDetailPage/BreadcrumbsDetail';
 
 export interface IParams {
   country?: string;
@@ -44,6 +43,17 @@ const element = [
   { icon: <BedroomParentIcon />, name: 'rooms' },
   { icon: <RateReviewIcon />, name: 'reviews' },
 ];
+
+const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  padding: '0 130px 0 130px',
+  paddingTop: 140,
+  rowGap: 10,
+  position: 'relative',
+  pt: 15,
+  [theme.breakpoints.down('lg')]: {
+    flexDirection: 'column',
+  },
+}));
 
 function HotelDetailPage() {
   const dateHotel = useLoaderData() as IDataHotelDetail;
@@ -141,63 +151,17 @@ function HotelDetailPage() {
   }, [dateHotel]);
 
   return (
-    <Stack padding={10} px={15} spacing={3} position='relative' pt={15}>
-      <Stack
-        mt={2}
-        flexDirection='row'
-        justifyContent='space-between'
-        alignItems='center'
-      >
-        <Breadcrumbs separator='›'>
-          <Link
-            fontSize={20}
-            color='primary.dark'
-            underline='hover'
-            component={LinkRouter}
-            to={breadcrumbs[0].link}
-          >
-            {breadcrumbs[0].value}
-          </Link>
-          <Link
-            fontSize={20}
-            color='primary.dark'
-            underline='hover'
-            component={LinkRouter}
-            to={breadcrumbs[1].link}
-          >
-            {breadcrumbs[1].value}
-          </Link>
-          <Link
-            fontSize={20}
-            color='primary.dark'
-            underline='hover'
-            component={LinkRouter}
-            to={breadcrumbs[2].link}
-          >
-            {breadcrumbs[2].value}
-          </Link>
-          <Typography
-            color='primary'
-            variant='h5'
-            sx={{ textDecoration: 'underline', textTransform: 'upperCase' }}
-          >
-            {breadcrumbs[3].value}
-          </Typography>
-        </Breadcrumbs>
-        <Button
-          onClick={() => setIsModalMapOpen(true)}
-          sx={{ width: 200 }}
-          variant='contained'
-        >
-          See Map
-        </Button>
-      </Stack>
+    <ResponsiveStack>
+      <BreadcrumbsDetail
+        setIsModalMapOpen={setIsModalMapOpen}
+        breadcrumbs={breadcrumbs}
+      />
       <BoxImages
         imagesHotel={imagesAll}
         setIsModalImagesOpen={setIsModalImagesOpen}
         hotelName={dateHotel.data?.hotelName}
       />
-      <FormSearchHotels />
+      <FormSearchHotels width='100%' marginTop='15px !important' />
       <ColorTabs
         numberBadge={[]}
         orientation='horizontal'
@@ -238,7 +202,7 @@ function HotelDetailPage() {
         actions={element}
         handelClick={handleSpeedHidden}
       />
-    </Stack>
+    </ResponsiveStack>
   );
 }
 

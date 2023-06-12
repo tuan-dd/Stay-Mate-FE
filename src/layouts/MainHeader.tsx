@@ -133,50 +133,22 @@ function MainHeader({
         p: 1,
       }}
     >
-      <Container maxWidth={false} sx={{ height: 80 }}>
-        <Toolbar>
+      <Container
+        maxWidth={false}
+        sx={{
+          height: 80,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Toolbar
+          sx={{ width: '100%', display: { xs: 'flex', md: 'none' } }}
+          disableGutters
+        >
           {/* mobile */}
-          <Logo
-            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 50, height: 50 }}
-          />
 
-          <Typography
-            variant='h5'
-            noWrap
-            component='a'
-            href='/'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'UseUrban',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'primary.dark',
-              textDecoration: 'none',
-            }}
-          >
-            Stay Mate
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => handleCloseNavMenu(page)}
-                sx={{
-                  my: 2,
-                  color: 'secondary.contrastText',
-                  display: 'block',
-                  fontWeight: 500,
-                }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-
-          {/* desktop */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
               aria-label='account of current user'
@@ -214,20 +186,129 @@ function MainHeader({
               ))}
             </Menu>
           </Box>
+          <Stack
+            flexDirection='row'
+            flexGrow={1}
+            alignItems='center'
+            justifyContent='center'
+          >
+            <Logo
+              sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: 35, height: 35 }}
+            />
+            <Typography
+              variant='h5'
+              noWrap
+              component='a'
+              href='/'
+              sx={{
+                mr: 2,
+                fontSize: 15,
+                display: { xs: 'flex', md: 'none' },
+                fontFamily: 'UseUrban',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'primary.dark',
+                textDecoration: 'none',
+              }}
+            >
+              Stay Mate
+            </Typography>
+          </Stack>
+          <Stack
+            sx={{ flexGrow: 0, display: { xs: 'flex', md: 'none' } }}
+            flexDirection='row'
+            gap={1}
+            alignItems='center'
+          >
+            <ModeToggle fontSize='medium' />
+            {CustomButton}
+            <IconButton onClick={() => navigate('/cart')}>
+              <Badge badgeContent={orders?.length || 0} color='error'>
+                <ShoppingCartIcon sx={{ color: 'primary.contrastText', fontSize: 22 }} />
+              </Badge>
+            </IconButton>
 
+            <Tooltip title='Open settings'>
+              <Stack alignItems='center'>
+                <IconButton onClick={handleOpenAccountMenu} sx={{ p: 0 }}>
+                  <Avatar
+                    alt={currentUser?.name}
+                    src={currentUser?.avatar}
+                    sx={{
+                      borderColor: 'black',
+                      border: '1px solid black',
+                      width: 30,
+                      height: 30,
+                    }}
+                  />
+                </IconButton>
+                {currentUser?.name && (
+                  <Typography
+                    fontFamily='monospace'
+                    sx={{ filter: ' brightness(1.75)', fontWeight: 600, fontSize: 14 }}
+                  >
+                    {currentUser?.name}
+                  </Typography>
+                )}
+              </Stack>
+            </Tooltip>
+            <Button onClick={handelClickBalance}>
+              <Typography
+                fontWeight={900}
+                color='rgb(155, 70, 201)'
+                fontSize={14}
+                fontFamily='monospace'
+                sx={{ filter: 'brightness(1.25)' }}
+              >
+                {Math.round(
+                  ((currentUser?.account.balance as number) + Number.EPSILON) * 100
+                ) / 100 || 0}{' '}
+                $
+              </Typography>
+            </Button>
+            <Menu
+              sx={{ mt: '45px' }}
+              id='menu-appbar'
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={() => handleCloseAccountMenu(null)}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={() => handleCloseAccountMenu(setting)}>
+                  <Typography textAlign='center'>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Stack>
+        </Toolbar>
+        {/* desktop */}
+        <Toolbar sx={{ width: '100%', display: { xs: 'none', md: 'flex' }, mx: 8 }}>
           <Logo
-            sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: 50, height: 50 }}
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              mr: 1,
+              width: 50,
+              height: 50,
+            }}
           />
           <Typography
             variant='h5'
             noWrap
             component='a'
-            href=''
+            href='/'
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: 'none', md: 'flex' },
               color: 'primary.dark',
-              flexGrow: 1,
               fontFamily: 'UseUrban',
               fontWeight: 700,
               letterSpacing: '.3rem',
@@ -237,8 +318,36 @@ function MainHeader({
             Stay Mate
           </Typography>
 
-          {/* box Menu and card */}
-          <Stack sx={{ flexGrow: 0 }} flexDirection='row' gap={3} alignItems='center'>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              alignItems: 'flex-start',
+            }}
+          >
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={() => handleCloseNavMenu(page)}
+                sx={{
+                  my: 2,
+                  color: 'secondary.contrastText',
+                  display: 'block',
+                  fontWeight: 500,
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+          <Stack
+            sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}
+            flexDirection='row'
+            minWidth={400}
+            gap={3}
+            alignItems='center'
+            justifyContent='flex-end'
+          >
             <ModeToggle />
             {CustomButton}
             <IconButton onClick={() => navigate('/cart')}>

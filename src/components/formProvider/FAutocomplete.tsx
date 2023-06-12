@@ -1,8 +1,18 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { PropsForm } from '@/utils/interface';
 
+import Autocomplete from '@mui/material/Autocomplete';
+import { styled } from '@mui/material/styles';
+import { PropsForm } from '@/utils/interface';
+import { ResponsiveTextField } from './FTextField';
+
+const ResponsiveAutocomplete = styled(Autocomplete)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    width: 200,
+    '.MuiInputBase-input': {
+      fontSize: 14,
+    },
+  },
+}));
 export default function FAutocomplete({
   name,
   options,
@@ -16,7 +26,7 @@ export default function FAutocomplete({
       name={name}
       control={control}
       render={({ field: { ref, ...field }, fieldState: { error, invalid } }) => (
-        <Autocomplete
+        <ResponsiveAutocomplete
           sx={{ pt: '8px' }}
           fullWidth
           value={field.value}
@@ -24,7 +34,7 @@ export default function FAutocomplete({
           onChange={(_event, newInputValue) => field.onChange(newInputValue)}
           options={options as (string | number)[]}
           renderInput={(params) => (
-            <TextField
+            <ResponsiveTextField
               placeholder={placeholder}
               focused
               onChange={(e) => field.onChange(e.target.value)}

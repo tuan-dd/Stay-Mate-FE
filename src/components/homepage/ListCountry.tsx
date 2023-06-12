@@ -10,6 +10,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { urlCountryLight, nameCountry, urlCountryDark } from '@utils/images';
 import { fDate } from '@utils/formatTime';
+import { styled } from '@mui/material/styles';
 
 const convertObjectParams = (name: string) => ({
   country: name,
@@ -42,6 +43,48 @@ const customCss = {
   top: 0,
 };
 
+const ResponsiveBox = styled('div')(({ theme }) => ({
+  width: '140px',
+  height: '140px',
+  [theme.breakpoints.down('lg')]: {
+    width: 100,
+    height: 100,
+  },
+  [theme.breakpoints.down('md')]: {
+    width: 80,
+    height: 80,
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: 60,
+    height: 60,
+  },
+}));
+
+const ResponsiveContainer = styled(Container)(({ theme }) => ({
+  width: '1200px',
+  marginTop: 60,
+  marginBottom: 10,
+  position: 'relative',
+  [theme.breakpoints.down('lg')]: {
+    width: '900px',
+  },
+  [theme.breakpoints.down('md')]: {
+    width: '600px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '500px',
+  },
+}));
+const ResponsiveTypography = styled(Typography)(({ theme }) => ({
+  fontSize: 18,
+  [theme.breakpoints.down('md')]: {
+    fontSize: 10,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 8,
+  },
+}));
+
 function ListCountry() {
   const { mode } = useColorScheme();
   const theme = useTheme();
@@ -71,7 +114,7 @@ function ListCountry() {
   };
 
   return (
-    <Container sx={{ maxWidth: 1200, mt: 10, position: 'relative' }} disableGutters>
+    <ResponsiveContainer disableGutters>
       <Box
         sx={{
           ...customCss,
@@ -125,7 +168,7 @@ function ListCountry() {
             }}
           >
             <Stack alignItems='center' spacing={2}>
-              <Box width='140px' height='140px'>
+              <ResponsiveBox>
                 <img
                   src={mode === 'light' ? urlCountryLight[i] : urlCountryDark[i]}
                   alt={name}
@@ -133,10 +176,10 @@ function ListCountry() {
                   width='100%'
                   height='100%'
                 />
-              </Box>
-              <Typography variant='body2' fontSize={18}>
+              </ResponsiveBox>
+              <ResponsiveTypography variant='body2' fontSize={18}>
                 {name}
-              </Typography>
+              </ResponsiveTypography>
             </Stack>
           </Box>
         ))}
@@ -165,7 +208,7 @@ function ListCountry() {
           right: 0,
         }}
       />
-    </Container>
+    </ResponsiveContainer>
   );
 }
 

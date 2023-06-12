@@ -15,6 +15,7 @@ import { IHotel, IResponse, IRoom } from '@utils/interface';
 import apiService from '@app/server';
 import LinearLoading from '@components/LinearLoading';
 import { IResponseGetHotels } from '@utils/loader';
+import { styled } from '@mui/material/styles';
 import {
   Pros,
   TProsLodash,
@@ -23,8 +24,6 @@ import {
   throttle,
 } from '@/utils/utils';
 import { IParams } from './HotelDetailPage';
-// import { IHotel, IResponse, cites } from './interface';
-// import { IParams } from '@/pages/HotelDetailPage';
 
 interface IDataHotelsRes extends IParams {
   result: IHotel<IRoom[]>[];
@@ -59,6 +58,12 @@ interface IQuery extends DefaultValues {
   price_lte: number;
   rateDescription: string;
 }
+
+export const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('lg')]: {
+    flexDirection: 'column',
+  },
+}));
 
 function SearchPage() {
   const loaderData = useLoaderData() as IDataHotelsRes;
@@ -199,16 +204,16 @@ function SearchPage() {
 
   return (
     <>
-      <Container maxWidth='xl'>
-        <Stack px={10} mt={16} spacing={3}>
-          <FormSearchHotels />
-          <Stack flexDirection='row' columnGap={4}>
+      <Container maxWidth={false}>
+        <Stack mt={16} spacing={3} alignItems='center' width='100%'>
+          <FormSearchHotels marginTop='15px !important' width='80vw' />
+          <ResponsiveStack flexDirection='row' columnGap={4} width='80vw'>
             <Box>
               <FormProvider {...methods}>
                 <FromSearchFilter handelReset={handelReset} />
               </FormProvider>
             </Box>
-            <Stack flexGrow={1} width='70%' spacing={1} position='relative' pl={3}>
+            <Stack width='100%' spacing={1} position='relative'>
               {hotels.length > 0 && (
                 <Typography variant='h5' sx={{ ml: 1 }}>
                   Found {count} {count === 1 ? 'hotel' : 'hotels'} in the city of{' '}
@@ -224,7 +229,7 @@ function SearchPage() {
                 hotels.map((hotel, index) => (
                   <Box
                     key={`${hotel.hotelName}_${index}`}
-                    sx={{ position: 'relative', padding: 1 }}
+                    sx={{ position: 'relative', padding: 1, width: '100%' }}
                   >
                     <CardHotel
                       hotel={hotel}
@@ -235,7 +240,7 @@ function SearchPage() {
                 ))
               )}
             </Stack>
-          </Stack>
+          </ResponsiveStack>
         </Stack>
         {!isFinishGetDaTaRef.current && !isFinishGetDaTa && (
           <Box sx={{ mt: 5 }}>

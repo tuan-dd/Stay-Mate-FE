@@ -45,13 +45,52 @@ const imageBed = [
   'https://res.cloudinary.com/diz2mh63x/image/upload/v1685859665/icons/image_part_125_vtpoo0.png',
   'https://res.cloudinary.com/diz2mh63x/image/upload/v1685859665/icons/image_part_124_dwrdg5.png',
 ];
-const styleText = {
+const ResponsiveTypography = styled(Typography)(({ theme }) => ({
   textAlign: 'center',
   fontSize: 22,
   mt: 1,
-  color: 'primary.dark',
+  color: theme.vars.palette.primary.dark,
   textTransform: 'capitalize',
-};
+  [theme.breakpoints.down('lg')]: {
+    fontSize: 18,
+  },
+}));
+
+const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('lg')]: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 30,
+    columnGap: 40,
+    overflowY: 'hidden',
+    position: 'relative',
+    width: '100%',
+    '::-webkit-scrollbar': { width: 8, bgcolor: 'transparent' },
+    '::-webkit-scrollbar-thumb': {
+      borderRadius: '10px',
+      WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+      backgroundColor: theme.vars.palette.primary.dark,
+    },
+    '::-webkit-scrollbar-track': {
+      borderRadius: '10px',
+      WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+      backgroundColor: '#F5F5F5',
+    },
+    alignContent: 'flex-start',
+    padding: 6,
+    paddingLeft: 30,
+  },
+}));
+
+export const ResponsiveDiv = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.down('lg')]: {
+    flexGrow: 1,
+
+    height: 400,
+    position: 'relative',
+  },
+}));
+
 const optionLabelBed = optionBedType.map((e, i) => (
   <Stack flexDirection='row' alignItems='center'>
     <Stack
@@ -72,41 +111,72 @@ const optionLabelBed = optionBedType.map((e, i) => (
 function FromSearchFilter({ handelReset }: { handelReset: () => void }) {
   return (
     <>
-      <Stack spacing={2}>
-        <Typography sx={styleText}>Your budget</Typography>
-        <CustomDivider />
-        <FSlider name='budget' min={0} max={2000} label='Your budget ' />
-        <Typography sx={styleText}>Room amenities</Typography>
-        <CustomDivider />
-        <Box sx={styleBox}>
-          <FMultiCheckbox options={Object.values(ERoomAmenities)} name='roomAmenities' />
-        </Box>
-        <Typography sx={styleText}>Star</Typography>
-        <CustomDivider />
-        <FRadioGroup
-          name='star'
-          options={[1, 2, 3, 4, 5]}
-          getOptionLabel={optionLabelStarRating}
-        />
-        <Typography sx={styleText}>Bed Types</Typography>
-        <CustomDivider />
-        <FRadioGroup
-          name='bedType'
-          options={optionBedType}
-          getOptionLabel={optionLabelBed}
-        />
-        <Typography sx={styleText}>Room Offers</Typography>
-        <CustomDivider />
-        <FRadioGroup
-          name='mealType'
-          options={['breakfast', 'dinner', 'parking', 'lunch']}
-          getOptionLabel={['Breakfast', 'Dinner', 'Parking', 'Lunch']}
-        />
-        <CustomDivider />
-        <Button onClick={() => handelReset()} variant='contained'>
+      <ResponsiveStack spacing={2} alignItems='flex-start'>
+        <ResponsiveDiv>
+          <ResponsiveTypography sx={{ mt: 3 }}>Your budget</ResponsiveTypography>
+          <CustomDivider />
+          <FSlider name='budget' min={0} max={2000} label='Your budget ' />
+        </ResponsiveDiv>
+        <ResponsiveDiv>
+          <ResponsiveTypography>Room amenities</ResponsiveTypography>
+          <CustomDivider />
+          <Box sx={styleBox}>
+            <FMultiCheckbox
+              options={Object.values(ERoomAmenities)}
+              name='roomAmenities'
+            />
+          </Box>
+        </ResponsiveDiv>
+        <ResponsiveDiv>
+          <ResponsiveTypography>Star</ResponsiveTypography>
+          <CustomDivider />
+          <FRadioGroup
+            name='star'
+            options={[1, 2, 3, 4, 5]}
+            getOptionLabel={optionLabelStarRating}
+          />
+        </ResponsiveDiv>
+        <ResponsiveDiv>
+          <ResponsiveTypography>Bed Types</ResponsiveTypography>
+          <CustomDivider />
+          <FRadioGroup
+            name='bedType'
+            options={optionBedType}
+            getOptionLabel={optionLabelBed}
+          />
+        </ResponsiveDiv>
+        <ResponsiveDiv>
+          <ResponsiveTypography>Room Offers</ResponsiveTypography>
+          <CustomDivider />
+          <FRadioGroup
+            name='mealType'
+            options={['breakfast', 'dinner', 'parking', 'lunch']}
+            getOptionLabel={['Breakfast', 'Dinner', 'Parking', 'Lunch']}
+          />
+          <CustomDivider />
+        </ResponsiveDiv>
+        <Button
+          onClick={() => handelReset()}
+          variant='contained'
+          sx={{ width: '100%', display: { md: 'none', lg: 'flex', xs: 'none' } }}
+        >
           Clear all
         </Button>
-      </Stack>
+        <Button
+          onClick={() => handelReset()}
+          variant='contained'
+          sx={{
+            height: 40,
+            display: { md: 'flex', lg: 'none' },
+            position: 'absolute',
+            bottom: 10,
+            left: '45%',
+            width: 250,
+          }}
+        >
+          Clear all
+        </Button>
+      </ResponsiveStack>
     </>
   );
 }

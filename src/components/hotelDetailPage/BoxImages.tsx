@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CardCover from '@mui/joy/CardCover/CardCover';
 import React from 'react';
+// import { styled } from '@mui/material/styles';
 
 function BoxImages({
   imagesHotel,

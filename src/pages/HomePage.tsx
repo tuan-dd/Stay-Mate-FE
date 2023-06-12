@@ -8,6 +8,7 @@ function HomePage() {
     <>
       <Stack
         justifyContent='center'
+        alignItems='center'
         sx={{
           height: '55vh',
           backgroundImage:

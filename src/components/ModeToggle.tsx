@@ -2,9 +2,12 @@ import { useColorScheme } from '@mui/joy/styles';
 import IconButton from '@mui/material/IconButton';
 import DarkMode from '@mui/icons-material/DarkMode';
 import LightMode from '@mui/icons-material/LightMode';
+import { SvgIconTypeMap } from '@mui/material';
+
+// import { SvgIconTypeMap } from '@mui/material';
 // import React from 'react';
 
-export default function ModeToggle() {
+export default function ModeToggle({ ...custom }: SvgIconTypeMap['props']) {
   const { mode, setMode } = useColorScheme();
 
   return (
@@ -14,12 +17,12 @@ export default function ModeToggle() {
     >
       {mode === 'dark' ? (
         <DarkMode
-          fontSize='large'
+          {...custom}
           sx={{ color: 'black', ':hover': { color: 'whitesmoke' } }}
         />
       ) : (
         <LightMode
-          fontSize='large'
+          {...custom}
           sx={{ color: 'whitesmoke', ':hover': { color: 'black' } }}
         />
       )}

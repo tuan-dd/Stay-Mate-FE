@@ -4,7 +4,26 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
+import { styled } from '@mui/material/styles';
 import Logo from '@/components/Logo';
+
+const ResponsiveTitle = styled(Typography)(({ theme }) => ({
+  fontSize: 18,
+  [theme.breakpoints.down('md')]: {
+    fontSize: 14,
+  },
+}));
+
+const ResponsiveContent = styled(Typography)(({ theme }) => ({
+  fontSize: 16,
+  color: theme.vars.palette.text.secondary,
+  [theme.breakpoints.down('md')]: {
+    fontSize: 12,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 10,
+  },
+}));
 
 function MainFooter() {
   const theme = useTheme();
@@ -42,49 +61,66 @@ function MainFooter() {
         sx={{ bgcolor: 'secondary.main', borderRadius: 'none' }}
       >
         <Stack flexGrow={1} flexDirection='row' alignItems='center' columnGap={2}>
-          <Logo sx={{ width: 100, height: 100, ml: 10 }} />
+          <Logo
+            sx={{ width: 100, height: 100, ml: 10, display: { xs: 'none', md: 'flex' } }}
+          />
+          <Logo
+            sx={{ width: 60, height: 60, ml: 4, display: { xs: 'flex', md: 'none' } }}
+          />
           <Typography
             fontFamily='UseUrban'
             color='primary.black'
             fontWeight={700}
             letterSpacing='.2rem'
+            sx={{ display: { xs: 'none', md: 'flex' } }}
             variant='h3'
+          >
+            STAY MATE
+          </Typography>
+
+          <Typography
+            fontFamily='UseUrban'
+            color='primary.black'
+            fontWeight={700}
+            sx={{ display: { xs: 'flex', md: 'none' } }}
+            letterSpacing='.2rem'
+            variant='h6'
           >
             STAY MATE
           </Typography>
         </Stack>
         <Stack width='40%' flexDirection='row'>
           <Stack flexGrow={1}>
-            <Typography variant='h5' color='white'>
+            <ResponsiveTitle variant='h5' color='white'>
               RESOURCES
-            </Typography>
-            <Typography variant='body1'>Agoda</Typography>
-            <Typography>Material-UI</Typography>
+            </ResponsiveTitle>
+            <ResponsiveContent>Agoda</ResponsiveContent>
+            <ResponsiveContent>Material-UI</ResponsiveContent>
           </Stack>
           <Stack flexGrow={1}>
-            <Typography variant='h5' color='white'>
+            <ResponsiveTitle variant='h5' color='white'>
               COMPANY
-            </Typography>
-            <Typography>About us</Typography>
-            <Typography>Careers</Typography>
+            </ResponsiveTitle>
+            <ResponsiveContent>About us</ResponsiveContent>
+            <ResponsiveContent>Careers</ResponsiveContent>
           </Stack>
           <Stack flexGrow={1}>
-            <Typography variant='h5' color='white'>
+            <ResponsiveTitle variant='h5' color='white'>
               HELP
-            </Typography>
-            <Typography>Help center</Typography>
-            <Typography>Contact</Typography>
+            </ResponsiveTitle>
+            <ResponsiveContent>Help center</ResponsiveContent>
+            <ResponsiveContent>Contact</ResponsiveContent>
           </Stack>
         </Stack>
       </Stack>
       <Divider />
       <Box sx={{ flexGrow: 0, bgcolor: 'secondary.main', pt: 2, height: 80 }}>
         <Typography variant='h4' align='center' pb={2}>
-          {'Copyright © 2022 '}
+          {`Copyright ©  ${new Date().getFullYear()}`}
           <Link color='inherit' href='tuandd.310797@gmail.com'>
+            {' '}
             Make by Anh Tuấn{' '}
           </Link>
-          {new Date().getFullYear()}
         </Typography>
       </Box>
     </>

@@ -10,9 +10,11 @@ interface ISlider extends PropsForm<number> {
   max: number;
 }
 const CustomSlider = styled(Slider)(({ theme }) => ({
-  marginTop: 50,
   color: theme.vars.palette.primary.main,
   height: 8,
+  minWidth: 200,
+  MarginTop: 20,
+  width: '100%',
   '& .MuiSlider-track': {
     border: 'none',
   },
@@ -71,7 +73,7 @@ function FSlider({ name, min, max }: ISlider) {
       name={name}
       control={control}
       render={({ field }) => (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', mt: 10 }}>
           <CustomSlider
             value={valueChange}
             min={min}

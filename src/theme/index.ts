@@ -165,7 +165,7 @@ const themeOptions = {
     secondary: SECONDARY,
     success: SUCCESS,
     text: {
-      primary: GREY[800],
+      primary: GREY[900],
       secondary: GREY[600],
       disabled: GREY[500],
     },
@@ -247,8 +247,9 @@ const muiTheme = extendMuiTheme({
           paper: 'rgba(45, 56, 67, 0.768)',
         },
         text: {
-          primary: colors.grey[800],
-          secondary: colors.grey[300],
+          primary: GREY[900],
+          secondary: GREY[600],
+          disabled: GREY[500],
         },
       },
     },

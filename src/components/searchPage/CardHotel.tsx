@@ -10,11 +10,25 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { Divider } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { IHotel, IRoom } from '@/utils/interface';
 import { urlImagesRooms, urlImagesRoomsLove, urlImagesTrending } from '@/utils/images';
 import ModalImages from '../modal/ModalImages';
 
 const isUrl = z.string().url();
+
+export const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+  },
+}));
+export const ResponsiveDiv = styled('div')(({ theme }) => ({
+  width: 400,
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+}));
+
 function CardHotel({
   hotel,
   index,
@@ -63,16 +77,17 @@ function CardHotel({
     );
     return small.price;
   }, [hotel]);
+
   return (
-    <Card sx={{ cursor: 'pointer' }}>
-      <CardActionArea>
-        <Stack flexDirection='row' columnGap={1}>
-          <Box sx={{ width: 300 }}>
+    <Card sx={{ cursor: 'pointer', width: '100%' }}>
+      <CardActionArea sx={{ width: '100%' }}>
+        <ResponsiveStack flexDirection='row' columnGap={1}>
+          <ResponsiveDiv>
             <ImageList
               variant='quilted'
               cols={4}
               rowHeight={45}
-              sx={{ m: 0, width: 300 }}
+              sx={{ m: 0, width: '100%' }}
             >
               {imagesHotel.slice(0, 4).map((item, i) => (
                 <ImageListItem
@@ -136,58 +151,60 @@ function CardHotel({
                 </Box>
               )}
             </ImageList>
-          </Box>
-          <Box
-            sx={{ flexGrow: 1 }}
-            onClick={() => handelNavigateDetail(hotel._id, index)}
-          >
-            <Stack spacing={1} mt={1}>
-              <Typography>{hotel.hotelName}</Typography>
-              <Rating readOnly value={hotel.star} size='small' />
-              <Typography>Address: {hotel.address}</Typography>
-              <Typography>Type: {hotel.propertyType}</Typography>
-            </Stack>
-          </Box>
-          <Divider orientation='vertical' flexItem />
-          <Box
-            sx={{ minWidth: 230 }}
-            onClick={() => handelNavigateDetail(hotel._id, index)}
-          >
-            <Stack justifyContent='space-around' alignItems='center' height='100%'>
-              <Box>
-                <Typography>
-                  Star Rating:&nbsp;&nbsp;&nbsp;&nbsp;
-                  <Typography
-                    component='span'
-                    variant='h2'
-                    fontWeight='600'
-                    color='success.light'
-                  >
-                    {Math.round(
-                      ((hotel.starRating.starAverage / 5) * 10 + Number.EPSILON) * 100
-                    ) / 100}
+          </ResponsiveDiv>
+          <Stack flexDirection='row' flexGrow={1} p={1}>
+            <Box
+              sx={{ flexGrow: 1 }}
+              onClick={() => handelNavigateDetail(hotel._id, index)}
+            >
+              <Stack spacing={1} mt={1}>
+                <Typography>{hotel.hotelName}</Typography>
+                <Rating readOnly value={hotel.star} size='small' />
+                <Typography>Address: {hotel.address}</Typography>
+                <Typography>Type: {hotel.propertyType}</Typography>
+              </Stack>
+            </Box>
+            <Divider orientation='vertical' flexItem />
+            <Box
+              sx={{ minWidth: 230 }}
+              onClick={() => handelNavigateDetail(hotel._id, index)}
+            >
+              <Stack justifyContent='space-around' alignItems='center' height='100%'>
+                <Box>
+                  <Typography>
+                    Star Rating:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Typography
+                      component='span'
+                      variant='h2'
+                      fontWeight='600'
+                      color='success.light'
+                    >
+                      {Math.round(
+                        ((hotel.starRating.starAverage / 5) * 10 + Number.EPSILON) * 100
+                      ) / 100}
+                    </Typography>
                   </Typography>
+                  {hotel.starRating.countReview > 0 ? (
+                    <Typography> Review: {hotel.starRating.countReview}</Typography>
+                  ) : (
+                    <Typography variant='body2'>There are no reviews yet</Typography>
+                  )}
+                </Box>
+                <Typography
+                  variant='h4'
+                  fontWeight='500'
+                  color='#e12d2d'
+                  sx={{ filter: `brightness(170%)` }}
+                >
+                  <Typography component='span' variant='body2'>
+                    Lowest room rate:
+                  </Typography>
+                  &nbsp;{Math.round((priceSmallest + Number.EPSILON) * 100) / 100}$
                 </Typography>
-                {hotel.starRating.countReview > 0 ? (
-                  <Typography> Review: {hotel.starRating.countReview}</Typography>
-                ) : (
-                  <Typography variant='body2'>There are no reviews yet</Typography>
-                )}
-              </Box>
-              <Typography
-                variant='h4'
-                fontWeight='500'
-                color='#e12d2d'
-                sx={{ filter: `brightness(170%)` }}
-              >
-                <Typography component='span' variant='body2'>
-                  Lowest room rate:
-                </Typography>
-                &nbsp;{Math.round((priceSmallest + Number.EPSILON) * 100) / 100}$
-              </Typography>
-            </Stack>
-          </Box>
-        </Stack>
+              </Stack>
+            </Box>
+          </Stack>
+        </ResponsiveStack>
         <ModalImages
           isOpenModal={isOpenModalImages}
           setIsOpenModal={setIsOpenModalImages}
