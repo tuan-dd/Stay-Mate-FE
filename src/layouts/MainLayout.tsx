@@ -14,9 +14,9 @@ function MainLayout() {
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   setIsOpenModalVoucher(true);
-  // }, []);
+  useEffect(() => {
+    setIsOpenModalVoucher(true);
+  }, []);
 
   return (
     <Stack position='relative'>
