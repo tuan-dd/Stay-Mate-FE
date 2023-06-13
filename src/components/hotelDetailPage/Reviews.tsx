@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
@@ -14,18 +15,65 @@ import ImageList from '@mui/material/ImageList';
 import { IResponse, IReview } from '@utils/interface';
 import apiService from '@app/server';
 import { fToNow } from '@utils/formatTime';
+import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ModalImages from '../modal/ModalImages';
 
 interface IReviewAndReplies extends IReview {
   reply?: IReview | null;
 }
 
-// tree-shaking and purge
-// TODO avoid magic number
-// const DATE_TIME_SLUG = 1682178766015;
+const ResponsiveStackParent = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('lg')]: {
+    flexDirection: 'column',
+  },
+}));
+const ResponsiveStackOne = styled(Stack)(({ theme }) => ({
+  width: 420,
+  columnGap: 12,
+  [theme.breakpoints.down('xl')]: {
+    margin: '0 auto',
+    width: 700,
+    alignItems: 'center',
+  },
+  [theme.breakpoints.down('md')]: {
+    width: 500,
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: 280,
+  },
+}));
+
+const ResponsiveTitle = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 16,
+  },
+}));
+
+const ResponsiveContent = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 10,
+  },
+}));
 
 function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
   const [reviews, setReviews] = React.useState<IReviewAndReplies[]>([]);
+  const matches1400px = useMediaQuery('(max-width:1450px)');
+  const matches600px = useMediaQuery('(max-width:600px)');
+  const matches1200px = useMediaQuery('(max-width:1200px)');
+  let withBoxImg = 400;
+
+  if (matches1400px && !matches1200px) {
+    withBoxImg = 300;
+  }
+
+  if (!matches1400px && matches1200px) {
+    withBoxImg = 600;
+  }
+  if (matches600px) {
+    withBoxImg = 300;
+  }
+
   const [isOpenModalImages, setIsOpenModalImages] = React.useState<boolean>(false);
   const imageListRef = React.useRef<string[]>([]);
   const [page, setPage] = React.useState<number>(1);
@@ -89,21 +137,23 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
         {reviews.length !== 0 &&
           reviews.map((review, i) => (
             <Card key={review.slug} sx={{ p: 2, minHeight: 300, flexGrow: 1 }}>
-              <Stack flexDirection='row' columnGap={2} minHeight={280}>
-                <Box width={420}>
-                  <Typography variant='h4' color='primary'>
+              <ResponsiveStackParent flexDirection='row' columnGap={2} minHeight={280}>
+                <ResponsiveStackOne>
+                  <ResponsiveTitle variant='h4' color='primary'>
                     Star Rating: {review.starRating}
-                  </Typography>
-                  <Typography variant='body1'>Author: {review.author.name}</Typography>
-                  <Typography variant='body1'>
+                  </ResponsiveTitle>
+                  <ResponsiveContent variant='body1'>
+                    Author: {review.author.name}
+                  </ResponsiveContent>
+                  <ResponsiveContent variant='body1'>
                     Stayed
                     {` ${
                       (dayjs(review.endDate).unix() - dayjs(review.startDate).unix()) /
                       86400
                     } night in ${dayjs(review.startDate).format('MMMM YYYY')} `}
-                  </Typography>
+                  </ResponsiveContent>
                   {review.images.length > 0 && (
-                    <Stack alignItems='center' width={400} height={200}>
+                    <Stack alignItems='center' width={withBoxImg} height={200}>
                       <ImageList cols={3} rowHeight={130} sx={{ mt: 2 }}>
                         {review.images.slice(0, 3).map((image, index) => (
                           <ImageListItem key={index} cols={1} rows={1}>
@@ -122,13 +172,13 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                       <Button onClick={() => handelOpenImages(i)}>See All images</Button>
                     </Stack>
                   )}
-                </Box>
+                </ResponsiveStackOne>
                 <Divider orientation='vertical' flexItem />
                 <Stack minWidth={200}>
-                  <Typography variant='h5'>Room Types order</Typography>
+                  <ResponsiveTitle variant='h5'>Room Types order</ResponsiveTitle>
                   <CardActions>
                     {review.rooms?.map((room) => (
-                      <Typography
+                      <ResponsiveContent
                         variant='body1'
                         key={room.name}
                         color='primary'
@@ -139,7 +189,7 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                         }}
                       >
                         {room.quantity} {room.name}
-                      </Typography>
+                      </ResponsiveContent>
                     ))}
                   </CardActions>
                 </Stack>
@@ -147,7 +197,8 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                 <Box sx={{ flexGrow: 1 }}>
                   <Box
                     sx={{
-                      minHeight: '45%',
+                      height: '45%',
+                      minHeight: 100,
                       border: 'solid 1px',
                       mb: 1,
                       p: 1,
@@ -155,14 +206,26 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                       borderRadius: 5,
                     }}
                   >
-                    <Typography variant='body1'>{review.context}</Typography>
-                    <Typography textAlign='end' variant='body2' color='text.primary'>
+                    <ResponsiveContent variant='body1'>
+                      {review.context}
+                    </ResponsiveContent>
+                    <ResponsiveContent
+                      textAlign='end'
+                      variant='body2'
+                      color='text.primary'
+                    >
                       {fToNow(review.updatedAt)}
-                    </Typography>
+                    </ResponsiveContent>
                     <Divider />
                     {review.isReply && (
                       <Button
-                        sx={{ position: 'absolute', bottom: 8, right: 5, mt: 1 }}
+                        sx={{
+                          position: 'absolute',
+                          bottom: 8,
+                          right: 5,
+                          mt: 1,
+                          fontSize: matches600px ? 10 : 14,
+                        }}
                         onClick={() => getRepliesInReview(review.slug as string, i)}
                       >
                         See Hotelier Reply
@@ -173,14 +236,18 @@ function Reviews({ idHotel, count }: { idHotel: string; count: number }) {
                     <Box
                       sx={{ border: 'solid 1px', p: 1, borderRadius: 5, height: '45%' }}
                     >
-                      <Typography>{review.reply.context}</Typography>
-                      <Typography textAlign='end' variant='body2' color='text.primary'>
+                      <ResponsiveContent>{review.reply.context}</ResponsiveContent>
+                      <ResponsiveContent
+                        textAlign='end'
+                        variant='body2'
+                        color='text.primary'
+                      >
                         {fToNow(review.updatedAt)}
-                      </Typography>
+                      </ResponsiveContent>
                     </Box>
                   )}
                 </Box>
-              </Stack>
+              </ResponsiveStackParent>
             </Card>
           ))}
       </Stack>

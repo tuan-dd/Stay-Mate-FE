@@ -21,7 +21,7 @@ const convertObjectParams = (name: string) => ({
   children: '0',
 });
 
-const styleArrow = {
+const ResponsiveIconButton = styled(IconButton)(({ theme }) => ({
   position: 'absolute',
   display: 'flex',
   zIndex: 15,
@@ -29,13 +29,21 @@ const styleArrow = {
   alignContent: 'center',
   height: '40px',
   width: '40px',
-  bgcolor: ' rgba(255, 255, 255, 0.305)',
+  backgroundColor: ' rgba(255, 255, 255, 0.305)',
   p: 0,
   opacity: 0.9,
   ':hover': {
     opacity: 1,
   },
-};
+  [theme.breakpoints.down('sm')]: {
+    height: '25px',
+    width: '25px',
+    ':hover': {
+      opacity: 1,
+    },
+  },
+}));
+
 const customCss = {
   position: 'absolute',
   height: '100%',
@@ -72,7 +80,7 @@ const ResponsiveContainer = styled(Container)(({ theme }) => ({
     width: '600px',
   },
   [theme.breakpoints.down('sm')]: {
-    width: '500px',
+    width: '330px',
   },
 }));
 const ResponsiveTypography = styled(Typography)(({ theme }) => ({
@@ -132,10 +140,9 @@ function ListCountry() {
       >
         Popular destinations
       </Typography>
-      <IconButton
+      <ResponsiveIconButton
         onClick={() => scroll('right')}
         sx={{
-          ...styleArrow,
           top: '50%',
           right: '0vw',
         }}
@@ -147,7 +154,7 @@ function ListCountry() {
             opacity: 0.5,
           }}
         />
-      </IconButton>
+      </ResponsiveIconButton>
       <Stack
         flexDirection='row'
         columnGap={3}
@@ -184,10 +191,9 @@ function ListCountry() {
           </Box>
         ))}
       </Stack>
-      <IconButton
+      <ResponsiveIconButton
         onClick={() => scroll('left')}
         sx={{
-          ...styleArrow,
           top: '50%',
           left: 3,
           pl: 1,
@@ -200,7 +206,7 @@ function ListCountry() {
             opacity: 0.5,
           }}
         />
-      </IconButton>
+      </ResponsiveIconButton>
       <Box
         sx={{
           ...customCss,

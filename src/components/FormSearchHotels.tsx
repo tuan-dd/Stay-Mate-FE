@@ -98,6 +98,11 @@ function FormSearchHotels({
       justifyContent: 'center',
       marginTop: 80,
     },
+    [theme.breakpoints.down('sm')]: {
+      height: 300,
+      width: 200,
+      marginTop: 100,
+    },
     width,
     marginTop,
   }));

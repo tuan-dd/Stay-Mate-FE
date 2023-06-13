@@ -12,16 +12,33 @@ const ResponsiveTitle = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     fontSize: 14,
   },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 10,
+  },
 }));
 
 const ResponsiveContent = styled(Typography)(({ theme }) => ({
   fontSize: 16,
-  color: theme.vars.palette.text.secondary,
+  color: theme.vars.palette.text.main,
   [theme.breakpoints.down('md')]: {
     fontSize: 12,
   },
   [theme.breakpoints.down('sm')]: {
-    fontSize: 10,
+    fontSize: 8,
+  },
+}));
+
+const ResponsiveLogo = styled(Typography)(({ theme }) => ({
+  fontFamily: 'UseUrban',
+  color: theme.vars.palette.primary.dark,
+  fontWeight: 700,
+  fontSize: 18,
+  letterSpacing: '.2rem',
+  [theme.breakpoints.down('md')]: {
+    fontSize: 12,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 11,
   },
 }));
 
@@ -41,7 +58,7 @@ function MainFooter() {
         <rect
           x='0'
           y='0'
-          width='960'
+          width='100%'
           height='200'
           fill={theme.palette.background.default}
         />
@@ -56,40 +73,37 @@ function MainFooter() {
         flexDirection='row'
         alignItems='center'
         p={2}
-        paddingX={5}
         width='100%'
         sx={{ bgcolor: 'secondary.main', borderRadius: 'none' }}
       >
         <Stack flexGrow={1} flexDirection='row' alignItems='center' columnGap={2}>
           <Logo
-            sx={{ width: 100, height: 100, ml: 10, display: { xs: 'none', md: 'flex' } }}
+            sx={{
+              width: 100,
+              height: 100,
+              ml: 10,
+              display: { xs: 'none', md: 'none', lg: 'flex' },
+            }}
           />
           <Logo
-            sx={{ width: 60, height: 60, ml: 4, display: { xs: 'flex', md: 'none' } }}
+            sx={{
+              width: 60,
+              height: 60,
+              ml: 4,
+              display: { xs: 'none', md: 'flex', lg: 'none' },
+            }}
           />
-          <Typography
-            fontFamily='UseUrban'
-            color='primary.black'
-            fontWeight={700}
-            letterSpacing='.2rem'
-            sx={{ display: { xs: 'none', md: 'flex' } }}
-            variant='h3'
-          >
-            STAY MATE
-          </Typography>
-
-          <Typography
-            fontFamily='UseUrban'
-            color='primary.black'
-            fontWeight={700}
-            sx={{ display: { xs: 'flex', md: 'none' } }}
-            letterSpacing='.2rem'
-            variant='h6'
-          >
-            STAY MATE
-          </Typography>
+          <Logo
+            sx={{
+              width: 40,
+              height: 40,
+              ml: 1,
+              display: { xs: 'flex', md: 'none', lg: 'none' },
+            }}
+          />
+          <ResponsiveLogo>STAY MATE</ResponsiveLogo>
         </Stack>
-        <Stack width='40%' flexDirection='row'>
+        <Stack width='40%' minWidth={200} flexDirection='row'>
           <Stack flexGrow={1}>
             <ResponsiveTitle variant='h5' color='white'>
               RESOURCES
@@ -97,6 +111,7 @@ function MainFooter() {
             <ResponsiveContent>Agoda</ResponsiveContent>
             <ResponsiveContent>Material-UI</ResponsiveContent>
           </Stack>
+          <Divider />
           <Stack flexGrow={1}>
             <ResponsiveTitle variant='h5' color='white'>
               COMPANY
@@ -115,7 +130,7 @@ function MainFooter() {
       </Stack>
       <Divider />
       <Box sx={{ flexGrow: 0, bgcolor: 'secondary.main', pt: 2, height: 80 }}>
-        <Typography variant='h4' align='center' pb={2}>
+        <Typography variant='h5' align='center' pb={2}>
           {`Copyright ©  ${new Date().getFullYear()}`}
           <Link color='inherit' href='tuandd.310797@gmail.com'>
             {' '}

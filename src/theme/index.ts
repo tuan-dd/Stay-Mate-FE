@@ -156,6 +156,9 @@ declare module '@mui/material/styles' {
   interface PaletteColorChannel {
     main: string;
   }
+  interface PaletteTextChannel {
+    main: string;
+  }
 }
 
 // function ThemeProvider({ children }) {

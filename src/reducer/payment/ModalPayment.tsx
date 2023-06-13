@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import LoadingButton from '@mui/lab/LoadingButton';
 import dayjs from 'dayjs';
+import { customScrollbar } from '@utils/utils';
 import { RootState, useAppDispatch } from '@/app/store';
 import { IBookingRes } from '@/utils/interface';
 import BasicModal from '@/components/modal/BasicModal';
@@ -27,17 +28,7 @@ const styleBox = {
   mt: 1,
   px: 3,
   maxHeight: 300,
-  '::-webkit-scrollbar': { width: 12, bgcolor: 'transparent' },
-  '::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: 'primary.dark',
-  },
-  '::-webkit-scrollbar-track': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: '#F5F5F5',
-  },
+  ...customScrollbar,
 };
 
 function ModalPayment({

@@ -23,7 +23,7 @@ export const ResponsiveLink = styled(LinkRouter)(({ theme }) => ({
     fontSize: 14,
   },
   [theme.breakpoints.down('sm')]: {
-    fontSize: 6,
+    fontSize: 9,
   },
 }));
 export const ResponsiveTypography = styled(Typography)(({ theme }) => ({
@@ -37,8 +37,8 @@ export const ResponsiveTypography = styled(Typography)(({ theme }) => ({
     fontSize: 15,
   },
   [theme.breakpoints.down('sm')]: {
-    paddingTop: 6,
-    fontSize: 8,
+    paddingTop: 5,
+    fontSize: 12,
   },
 }));
 

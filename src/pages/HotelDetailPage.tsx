@@ -18,6 +18,7 @@ import { IHotel, IRoom } from '@utils/interface';
 import BasicSpeedDial from '@components/SpeedDial';
 import FormSearchHotels from '@components/FormSearchHotels';
 import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { createToast, getDeleteFilter, throttle } from '@/utils/utils';
 import BreadcrumbsDetail from '@/components/hotelDetailPage/BreadcrumbsDetail';
 
@@ -38,11 +39,11 @@ export interface IDataHotelDetail extends IParams {
 
 const isUrl = z.string().url();
 
-const element = [
-  { icon: <VisibilityIcon />, name: 'overview' },
-  { icon: <BedroomParentIcon />, name: 'rooms' },
-  { icon: <RateReviewIcon />, name: 'reviews' },
-];
+// const element = [
+//   { icon: <VisibilityIcon />, name: 'overview' },
+//   { icon: <BedroomParentIcon />, name: 'rooms' },
+//   { icon: <RateReviewIcon />, name: 'reviews' },
+// ];
 
 const ResponsiveStack = styled(Stack)(({ theme }) => ({
   padding: '0 130px 0 130px',
@@ -51,11 +52,35 @@ const ResponsiveStack = styled(Stack)(({ theme }) => ({
   position: 'relative',
   pt: 15,
   [theme.breakpoints.down('lg')]: {
-    flexDirection: 'column',
+    paddingLeft: '60px',
+    paddingRight: '60px',
+  },
+  [theme.breakpoints.down('md')]: {
+    paddingLeft: '40px',
+    paddingRight: '40px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: '20px',
+    paddingRight: '20px',
   },
 }));
 
 function HotelDetailPage() {
+  const matchesMobile = useMediaQuery('(max-width:600px)');
+  const element = [
+    {
+      icon: <VisibilityIcon fontSize={matchesMobile ? 'inherit' : 'medium'} />,
+      name: 'overview',
+    },
+    {
+      icon: <BedroomParentIcon fontSize={matchesMobile ? 'inherit' : 'medium'} />,
+      name: 'rooms',
+    },
+    {
+      icon: <RateReviewIcon fontSize={matchesMobile ? 'inherit' : 'medium'} />,
+      name: 'reviews',
+    },
+  ];
   const dateHotel = useLoaderData() as IDataHotelDetail;
   const [isModalMapOpen, setIsModalMapOpen] = React.useState<boolean>(false);
   const [isModalImagesOpen, setIsModalImagesOpen] = React.useState<boolean>(false);
@@ -166,6 +191,7 @@ function HotelDetailPage() {
         numberBadge={[]}
         orientation='horizontal'
         value={positionPage}
+        sx={{ my: 2 }}
         handleChange={handleChangePosition}
         tabs={[...element]}
       />

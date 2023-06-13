@@ -11,6 +11,33 @@
   font-family: 'UseFuturistic';
   src: url(./fonts/ZilapOrionPersonalUseFuturistic-DzA3.ttf) format('truetype');
 }
-body {
-  /* overflow-x: hidden; */
+
+body,
+html,
+#root {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  overflow: auto;
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+  overflow: auto;
+}
+
+html::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #e76993;
+}
+html::-webkit-scrollbar-track {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
 }

@@ -21,10 +21,16 @@ const ResponsiveButton = styled(Button)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     minWidth: 200,
   },
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 150,
+  },
 }));
 const ResponsiveTypography = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
     fontSize: 11,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 8,
   },
 }));
 
@@ -32,6 +38,9 @@ const ResponsiveTypographySpan = styled('span')(({ theme }) => ({
   color: theme.vars.palette.text.secondary,
   [theme.breakpoints.down('lg')]: {
     fontSize: 9,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 7,
   },
 }));
 

@@ -3,7 +3,18 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Badge from '@mui/material/Badge';
 import { SxProps } from '@mui/material';
-import { IActions } from '@/utils/interface';
+import { IActions } from '@utils/interface';
+import { styled } from '@mui/material/styles';
+
+const ResponsiveTab = styled(Tab)(({ theme }) => ({
+  fontSize: 18,
+  [theme.breakpoints.down('md')]: {
+    fontSize: 16,
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: 12,
+  },
+}));
 
 export default function ColorTabs({
   tabs,
@@ -36,16 +47,16 @@ export default function ColorTabs({
         {tabs.map((tab, i) => {
           if (typeof tab === 'string')
             return (
-              <Tab
+              <ResponsiveTab
                 key={tab}
                 value={tab}
                 label={tab}
-                sx={{ fontSize: 18, justifyContent: 'space-around', ...sxTab }}
+                sx={{ justifyContent: 'space-around', ...sxTab }}
               />
             );
 
           return (
-            <Tab
+            <ResponsiveTab
               key={tab.name}
               value={tab.name}
               label={tab.name}
@@ -62,7 +73,7 @@ export default function ColorTabs({
                 </Badge>
               }
               iconPosition='start'
-              sx={{ fontSize: 18, justifyContent: 'flex-start', ...sxTab }}
+              sx={{ justifyContent: 'flex-start', ...sxTab }}
             />
           );
         })}

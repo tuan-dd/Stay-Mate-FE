@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import FSlider from '../formProvider/FSlider';
 import { FMultiCheckbox, FRadioGroup } from '../formProvider';
 import { ERoomAmenities } from '@/utils/enum';
+import { customScrollbar } from '@/utils/utils';
 
 const CustomDivider = styled(Divider)({
   borderBottomWidth: 3,
@@ -20,19 +21,8 @@ const styleBox = {
   ml: 'auto',
   mr: 'auto',
   mt: 1.5,
-
   maxHeight: 300,
-  '::-webkit-scrollbar': { width: 12, bgcolor: 'transparent' },
-  '::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: 'primary.dark',
-  },
-  '::-webkit-scrollbar-track': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: '#F5F5F5',
-  },
+  ...customScrollbar,
 };
 const optionLabelStarRating = new Array(5)
   .fill('null')
@@ -65,20 +55,10 @@ const ResponsiveStack = styled(Stack)(({ theme }) => ({
     overflowY: 'hidden',
     position: 'relative',
     width: '100%',
-    '::-webkit-scrollbar': { width: 8, bgcolor: 'transparent' },
-    '::-webkit-scrollbar-thumb': {
-      borderRadius: '10px',
-      WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-      backgroundColor: theme.vars.palette.primary.dark,
-    },
-    '::-webkit-scrollbar-track': {
-      borderRadius: '10px',
-      WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-      backgroundColor: '#F5F5F5',
-    },
     alignContent: 'flex-start',
     padding: 6,
     paddingLeft: 30,
+    ...customScrollbar,
   },
 }));
 

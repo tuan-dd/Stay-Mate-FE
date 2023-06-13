@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 
+import { customScrollbar } from '@utils/utils';
 import RejectionFiles from './RejectionFiles';
 
 const DropZoneStyle = styled('div')(({ theme }) => ({
@@ -29,17 +30,7 @@ const StyleGrid = {
   with: '100%',
   maxHeight: 400,
   overflowX: 'hidden',
-  '::-webkit-scrollbar': { width: 12, bgcolor: 'transparent' },
-  '::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: 'primary.main',
-  },
-  '::-webkit-scrollbar-track': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: '#F5F5F5',
-  },
+  ...customScrollbar,
 };
 
 function UploadImages({

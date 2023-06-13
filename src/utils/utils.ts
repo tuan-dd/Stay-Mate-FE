@@ -31,6 +31,7 @@ export function debounce<Params extends any[]>(
   delay: number
 ): (...args: Params) => void {
   let timer: NodeJS.Timeout;
+
   return (...args: Params) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
@@ -68,3 +69,17 @@ export function createToast(
 ) {
   return toast[type](content);
 }
+
+export const customScrollbar = {
+  '::-webkit-scrollbar': { width: 8, height: 8, bgcolor: 'transparent' },
+  '::-webkit-scrollbar-thumb': {
+    borderRadius: '10px',
+    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+    backgroundColor: '#e76993',
+  },
+  '::-webkit-scrollbar-track': {
+    borderRadius: '10px',
+    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
+    backgroundColor: '#F5F5F5',
+  },
+};

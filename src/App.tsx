@@ -13,7 +13,7 @@ import { loaderHotel, loaderHotels } from './utils/loader';
 import LoadingScreen from './components/LoadingScreen';
 import SearchPage from './pages/SearchPage';
 import mergedTheme from './theme';
-import './App.css';
+
 import HomePage from './pages/HomePage';
 import Contact from './pages/Contact';
 import HelpCenterPage from './pages/HelpCenterPage';

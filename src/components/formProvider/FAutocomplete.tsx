@@ -12,6 +12,13 @@ const ResponsiveAutocomplete = styled(Autocomplete)(({ theme }) => ({
       fontSize: 14,
     },
   },
+  [theme.breakpoints.down('sm')]: {
+    width: 150,
+
+    '.MuiInputBase-input': {
+      fontSize: 12,
+    },
+  },
 }));
 export default function FAutocomplete({
   name,

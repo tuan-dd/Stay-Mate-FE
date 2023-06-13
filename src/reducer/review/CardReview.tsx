@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { IReview } from '@/utils/interface';
 import { fDate, fToNow } from '@/utils/formatTime';
+import { customScrollbar } from '@/utils/utils';
 
 const StyleGrid = {
   pr: 1,
@@ -19,17 +20,7 @@ const StyleGrid = {
   with: '100%',
   maxHeight: 200,
   overflowX: 'hidden',
-  '::-webkit-scrollbar': { width: 12, bgcolor: 'transparent' },
-  '::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: 'primary.main',
-  },
-  '::-webkit-scrollbar-track': {
-    borderRadius: '10px',
-    WebkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,.3)',
-    bgcolor: '#F5F5F5',
-  },
+  ...customScrollbar,
 };
 function CardReview({
   review,

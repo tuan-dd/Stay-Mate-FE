@@ -15,6 +15,12 @@ const ResponsiveDatePicker = styled(DatePicker)(({ theme }) => ({
       fontSize: 14,
     },
   },
+  [theme.breakpoints.down('sm')]: {
+    width: 150,
+    '.MuiInputBase-input': {
+      fontSize: 12,
+    },
+  },
 }));
 
 const ResponsiveBox = styled('div')(({ theme }) => ({
