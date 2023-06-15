@@ -118,6 +118,7 @@ function CardReview({
                   alt='imgReview'
                   width={matches600px ? '90%' : '100%'}
                   height='100%'
+                  loading='lazy'
                 />
               </Grid>
             ))}

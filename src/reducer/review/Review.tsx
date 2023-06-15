@@ -8,7 +8,7 @@ import ColorTabs from '@/components/ColorTabs';
 import CardReview from './CardReview';
 import { fetchGetReviewsByUser } from './review.slice';
 import { throttle } from '@/utils/utils';
-import FromModalReview from './FromModalReview';
+import FromModalReview from './FormModalReview';
 import { IReview } from '@/utils/interface';
 
 const tabs = [

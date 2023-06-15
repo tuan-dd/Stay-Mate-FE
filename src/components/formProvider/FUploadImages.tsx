@@ -1,10 +1,16 @@
 import { useFormContext, Controller } from 'react-hook-form';
 import FormHelperText from '@mui/material/FormHelperText';
 import { DropzoneOptions } from 'react-dropzone';
+import { SxProps } from '@mui/material';
 import { PropsForm } from '@/utils/interface';
 import UploadImages from '../UpLoadImages';
 
-function FUploadImages({ name, helperText, ...other }: PropsForm & DropzoneOptions) {
+interface IUploadImages extends PropsForm {
+  sxStack?: SxProps;
+  sxGrid?: SxProps;
+}
+
+function FUploadImages({ name, helperText, ...other }: IUploadImages & DropzoneOptions) {
   const { control } = useFormContext();
 
   return (

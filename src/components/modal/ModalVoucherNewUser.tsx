@@ -3,10 +3,12 @@
 
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { SvgIconTypeMap } from '@mui/material';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { RootState } from '@/app/store';
 import BasicModal from './BasicModal';
 
@@ -27,10 +29,12 @@ export function IconClose({
   sx,
   setClose,
   ...other
-}: { setClose: React.Dispatch<React.SetStateAction<boolean>> } & IconButtonProps) {
+}: {
+  setClose: React.Dispatch<React.SetStateAction<boolean>>;
+} & SvgIconTypeMap['props']) {
   return (
-    <StyleIconClose {...other} sx={{ ...sx }} onClick={() => setClose(false)}>
-      <CloseIcon fontSize='large' />
+    <StyleIconClose sx={{ ...sx }} onClick={() => setClose(false)}>
+      <CloseIcon fontSize='large' {...other} />
     </StyleIconClose>
   );
 }
@@ -44,6 +48,7 @@ export default function ModalVoucherNewUser({
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   setIsOpenSignIn: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const matches600px = useMediaQuery('(max-width:600px)');
   const { is2FA: isRightCode } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
@@ -63,6 +68,7 @@ export default function ModalVoucherNewUser({
         setOpen={setIsOpenModal}
         sx={{
           ...style,
+          width: matches600px ? 250 : 400,
         }}
       >
         <IconClose setClose={setIsOpenModal} />

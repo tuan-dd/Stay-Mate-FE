@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 import { useState, useEffect } from 'react';
 import ModalVoucherNewUser from '@components/modal/ModalVoucherNewUser';
@@ -13,9 +13,10 @@ function MainLayout() {
   const [isOpenModalVoucher, setIsOpenModalVoucher] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
+  const location = useLocation();
 
   useEffect(() => {
-    setIsOpenModalVoucher(true);
+    if (!location.search.includes('bookingId')) setIsOpenModalVoucher(true);
   }, []);
 
   return (

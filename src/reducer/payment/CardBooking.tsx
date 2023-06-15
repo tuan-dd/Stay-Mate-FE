@@ -91,6 +91,7 @@ function CardBooking({
             alt={booking.hotelId.hotelName}
             width='100%'
             height='100%'
+            loading='lazy'
           />
         </Box>
         {matches900px && <Divider sx={{ mt: 1 }} orientation='horizontal' flexItem />}

@@ -13,6 +13,9 @@ import Visibility from '@mui/icons-material/Visibility';
 import LoadingButton from '@mui/lab/LoadingButton';
 import dayjs from 'dayjs';
 import { customScrollbar } from '@utils/utils';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { styled } from '@mui/material/styles';
+import { Divider } from '@mui/material';
 import { RootState, useAppDispatch } from '@/app/store';
 import { IBookingRes } from '@/utils/interface';
 import BasicModal from '@/components/modal/BasicModal';
@@ -31,6 +34,12 @@ const styleBox = {
   ...customScrollbar,
 };
 
+const ResponsiveTypography = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    fontSize: 12,
+  },
+}));
+
 function ModalPayment({
   bookingPending,
   isOpenModal,
@@ -40,6 +49,7 @@ function ModalPayment({
   isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const matches700px = useMediaQuery('(max-width:700px)');
   const time =
     dayjs(bookingPending?.createdAt).unix() +
     (bookingPending?.duration as number) / 1000 -
@@ -84,20 +94,19 @@ function ModalPayment({
       10
     ) + 1 || 2;
 
-  const refInterval = React.useRef<null | NodeJS.Timer>(null);
-
   React.useEffect(() => {
-    if (timeExpires > 0)
-      refInterval.current = setInterval(() => setTimeExpires((e) => e - 1), 1000);
+    let intervalTime: null | NodeJS.Timer = null;
+    if (timeExpires > 0 && !intervalTime)
+      intervalTime = setInterval(() => setTimeExpires((e) => e - 1), 1000);
 
-    if (refInterval.current && !timeExpires) {
+    if (intervalTime && timeExpires <= 0) {
       setIsOpenModal(false);
       if (statusPayment === EStatusIBooking.PENDING)
         fetchGetBookings({ page: 1, status: EStatusIBooking.PENDING });
-      clearInterval(refInterval.current);
+      clearInterval(intervalTime);
     }
     return () => {
-      if (refInterval.current) clearInterval(refInterval.current);
+      if (intervalTime) clearInterval(intervalTime);
     };
   }, [timeExpires]);
 
@@ -105,7 +114,7 @@ function ModalPayment({
     <BasicModal
       open={isOpenModal}
       setOpen={setIsOpenModal}
-      sx={{ p: 0, width: 600, height: 'auto' }}
+      sx={{ p: 0, width: matches700px ? '90%' : 600, height: 'auto' }}
       disableGutters
     >
       {bookingPending && (
@@ -126,30 +135,37 @@ function ModalPayment({
                 </Alert>
               )}
               <Box sx={{ flexGrow: 1 }}>
-                <Stack mt={3} sx={{ ...styleBox }}>
-                  <Stack flexDirection='row' justifyContent='space-between'>
-                    <Typography>
+                <Stack mt={5} sx={{ ...styleBox }}>
+                  <Stack flexDirection='row' justifyContent='space-between' mb={2}>
+                    <Typography fontSize={matches700px ? 14 : 16} color='primary.main'>
                       {dayjs(bookingPending.startDate).format('DD-MM-YYYY')} -{' '}
                       {dayjs(bookingPending.endDate).format('DD-MM-YYYY')}
                     </Typography>
-                    <Typography>
+                    <Typography fontSize={matches700px ? 14 : 16} color='primary.main'>
                       {numberDay} days {(numberDay as number) - 1}{' '}
                       {(numberDay as number) - 1 < 2 ? 'night' : 'nights'}
                     </Typography>
                   </Stack>
                   {bookingPending.rooms.map((room, i) => (
-                    <Box key={i}>
-                      <Stack flexDirection='row' justifyContent='space-between'>
-                        <Box>
-                          <Typography>Room name: {room.roomTypeId.nameOfRoom}</Typography>
-                          <Typography>Quantity : {room.quantity}</Typography>
-                        </Box>
-                        <Typography>Price: {room.roomTypeId.price}</Typography>
-                      </Stack>
-                    </Box>
+                    <Stack key={i} flexDirection='row' columnGap={1}>
+                      <Box flexGrow={1} width='95%'>
+                        <ResponsiveTypography>
+                          Room name: {room.roomTypeId.nameOfRoom}
+                        </ResponsiveTypography>
+                        <ResponsiveTypography>
+                          Quantity : {room.quantity}
+                        </ResponsiveTypography>
+                      </Box>
+                      <Divider orientation='vertical' flexItem />
+                      <Box width={matches700px ? 100 : 140}>
+                        <ResponsiveTypography textAlign='start'>
+                          Price: {room.roomTypeId.price}
+                        </ResponsiveTypography>
+                      </Box>
+                    </Stack>
                   ))}
                 </Stack>
-                <Typography textAlign='end' variant='h4'>
+                <Typography textAlign='end' variant='h4' color='primary.dark' mt={1}>
                   Total:{' '}
                   {Math.round(((bookingPending.total as number) + Number.EPSILON) * 100) /
                     100}

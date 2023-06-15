@@ -74,7 +74,8 @@ function AccountPage() {
   const matches500px = useMediaQuery('(max-width:500px)');
   const [searchParams] = useSearchParams();
   const tabQuery = searchParams.get('tab');
-
+  const numberBookingsRef = React.useRef<number>(0);
+  const numberReviewsRef = React.useRef<number>(0);
   const [nameComponent, setNameComponent] = React.useState<string>(
     tabQuery || tabs[0].name
   );
@@ -103,17 +104,17 @@ function AccountPage() {
     if (is2FA) {
       if (!targetBooking && bookingId) dispatch(fetchGetTargetBooking(bookingId));
     }
-  }, [bookingId]);
+  }, [bookingId, is2FA]);
 
   React.useEffect(() => {
     if (bookingId && targetBooking && is2FA) {
       if (targetBooking.status === EStatusIBooking.PENDING) {
-        if (isCreateBookingSuccess) dispatch(setIsCreateBookingSuccess(false));
         setIsOpenModalPayment(true);
         bookingRef.current = targetBooking;
+        if (isCreateBookingSuccess) dispatch(setIsCreateBookingSuccess(false));
       }
     }
-  }, [targetBooking]);
+  }, [targetBooking, is2FA, bookingId]);
 
   const oneItemGetReviewsRef = React.useRef<NodeJS.Timeout | null>(null);
 
@@ -124,13 +125,9 @@ function AccountPage() {
     );
   }
 
-  const numberBookingsRef = React.useRef<number>(0);
-
   if (statusPayment === EStatusIBooking.PENDING) {
     numberBookingsRef.current = count;
   }
-
-  const numberReviewsRef = React.useRef<number>(0);
 
   if (!review.isReview) {
     numberReviewsRef.current = review.count;

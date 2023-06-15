@@ -8,8 +8,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
-
-import { customScrollbar } from '@utils/utils';
 import RejectionFiles from './RejectionFiles';
 
 const DropZoneStyle = styled('div')(({ theme }) => ({
@@ -24,27 +22,20 @@ const DropZoneStyle = styled('div')(({ theme }) => ({
   '&:hover': { opacity: 0.72, cursor: 'pointer' },
 }));
 
-const StyleGrid = {
-  p: 3,
-  mt: 1,
-  with: '100%',
-  maxHeight: 400,
-  overflowX: 'hidden',
-  ...customScrollbar,
-};
-
 function UploadImages({
   error = false,
   files,
   helperText,
-  sx,
+  sxStack,
+  sxGrid,
   handleDelete,
   ...other
 }: {
   error: boolean;
   helperText?: JSX.Element;
   files: string[] | any[];
-  sx?: SxProps;
+  sxStack?: SxProps;
+  sxGrid?: SxProps;
   handleDelete: (i: number) => void;
 } & DropzoneOptions) {
   const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } =
@@ -54,7 +45,7 @@ function UploadImages({
     });
 
   return (
-    <Stack sx={{ ...sx }}>
+    <Stack sx={{ ...sxStack }} spacing={2}>
       <DropZoneStyle
         {...getRootProps()}
         sx={{
@@ -85,14 +76,14 @@ function UploadImages({
         </Stack>
       </DropZoneStyle>
       {files.length !== 0 && (
-        <Grid container spacing={3} sx={StyleGrid}>
+        <Grid container sx={{ ...sxGrid }} spacing={1} pr={1}>
           {files.map((file, i) => (
             <Grid
               item
               xs={6}
               sm={4}
               key={i}
-              sx={{ p: 'auto', position: 'relative', width: 200, height: 200 }}
+              sx={{ position: 'relative', width: '100%', height: 140 }}
             >
               <img
                 loading='lazy'
@@ -101,6 +92,7 @@ function UploadImages({
                 width='100%'
                 height='100%'
               />
+
               <IconButton
                 onClick={() => handleDelete(i)}
                 sx={{

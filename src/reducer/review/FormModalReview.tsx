@@ -11,19 +11,28 @@ import BasicModal from '@components/modal/BasicModal';
 import { IReview } from '@utils/interface';
 import { EStatusRedux } from '@utils/enum';
 import { RootState, useAppDispatch } from '@app/store';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { fetchCreateReview, fetchUpdateReview } from './review.slice';
+import { customScrollbar } from '@/utils/utils';
 
 interface IDefaultValues {
   images: any[];
-  context: string;
+  content: string;
   starRating: number;
 }
 
 const checkInput = z.object({
   images: z.array(z.any()),
-  context: z.string().min(1),
+  content: z.string().min(1),
   starRating: z.number().min(0.5).or(z.string()),
 });
+
+const styleGrid = {
+  width: '100%',
+  height: 200,
+  overflowX: 'hidden',
+  ...customScrollbar,
+};
 
 function FromModalReview({
   review,
@@ -34,9 +43,11 @@ function FromModalReview({
   isOpenModal: boolean;
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const matches900px = useMediaQuery('(max-width:900px)');
+
   const defaultValues: IDefaultValues = {
     images: review?.images || [],
-    context: review?.context as string,
+    content: review?.context as string,
     starRating: review?.starRating || 0,
   };
 
@@ -76,12 +87,12 @@ function FromModalReview({
   );
 
   const onSubmit: SubmitHandler<IDefaultValues> = (data) => {
-    const { images, context, starRating } = data;
+    const { images, content, starRating } = data;
     if (review.starRating > 0) {
       dispatch(
         fetchUpdateReview({
           images,
-          context,
+          context: content,
           starRating,
           _id: review._id,
           isDelete: false,
@@ -91,7 +102,7 @@ function FromModalReview({
       dispatch(
         fetchCreateReview({
           images,
-          context,
+          context: content,
           starRating,
           _id: review._id,
           hotelId: review.hotel.hotelId,
@@ -108,13 +119,17 @@ function FromModalReview({
     <BasicModal
       open={isOpenModal}
       setOpen={setIsOpenModal}
-      sx={{ p: 0, width: 900, maxHeight: 700 }}
+      sx={{
+        p: 0,
+        width: matches900px ? '90%' : 900,
+        maxHeight: 600,
+      }}
       disableGutters
     >
-      <Box ml={1} p={2}>
+      <Box p={2}>
         <FormProvider onSubmit={onSubmit} {...methods}>
           <Stack spacing={2} pt={2}>
-            <FTextField name='context' label='Context' focused />
+            <FTextField name='content' label='Content' focused />
             <FTextField
               name='starRating'
               type='number'
@@ -129,6 +144,7 @@ function FromModalReview({
               }}
               maxSize={5145728}
               onDrop={handleDrop}
+              sxGrid={{ ...styleGrid }}
             />
             <LoadingButton type='submit' loading={status === EStatusRedux.pending}>
               Submit

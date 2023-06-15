@@ -7,7 +7,6 @@ import Container from '@mui/material/Container';
 import { useForm } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import FromSearchFilter from '@components/searchPage/FromSearchFilter';
 import FormSearchHotels from '@components/FormSearchHotels';
 import { FormProvider } from '@components/formProvider';
 import CardHotel from '@components/searchPage/CardHotel';
@@ -16,6 +15,7 @@ import apiService from '@app/server';
 import LinearLoading from '@components/LinearLoading';
 import { IResponseGetHotels } from '@utils/loader';
 import { styled } from '@mui/material/styles';
+import FromSearchFilter from '@/components/searchPage/FormSearchFilter';
 import {
   Pros,
   TProsLodash,

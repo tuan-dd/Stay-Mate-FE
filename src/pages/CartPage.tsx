@@ -78,6 +78,7 @@ function CartPage() {
               <img
                 src='https://cdn6.agoda.net/images/kite-js/illustrations/athena/baggage/group.svg'
                 alt='icon'
+                loading='lazy'
                 width={matchesMobile ? '70px' : '100px'}
                 height={matchesMobile ? '70px' : '100px'}
               />

@@ -109,6 +109,7 @@ export const paymentSlice = createSlice({
         state.bookings.forEach((booking) => {
           if (booking._id === action.payload) {
             booking.status = EStatusIBooking.SUCCESS;
+            state.count -= 1;
           }
         });
         createToast('Payment booking success, have a great vacation', 'success');

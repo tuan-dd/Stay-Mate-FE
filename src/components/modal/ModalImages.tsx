@@ -4,6 +4,7 @@ import CardCover from '@mui/joy/CardCover';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import IconButton from '@mui/material/IconButton';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import BasicModal from './BasicModal';
 import { IconClose } from './ModalVoucherNewUser';
 
@@ -15,7 +16,6 @@ const styleButton = {
   alignContent: 'center',
   color: 'primary.dark',
   top: '45%',
-  right: '0',
   opacity: 0.9,
   ':hover': {
     opacity: 1,
@@ -32,6 +32,7 @@ function ModalImages({
   images: string[];
 }) {
   const [index, setIndex] = React.useState<number>(0);
+  const matches600px = useMediaQuery('(max-width:600px)');
 
   React.useEffect(() => {
     setIndex(0);
@@ -42,11 +43,16 @@ function ModalImages({
       open={isOpenModal}
       setOpen={setIsOpenModal}
       disableGutters
-      sx={{ height: 600, width: 700, p: 0, border: 'none' }}
+      sx={{
+        height: matches600px ? 400 : 600,
+        width: matches600px ? 380 : 700,
+        p: 0,
+        border: 'none',
+      }}
     >
-      <IconClose setClose={setIsOpenModal} size='small' />
+      <IconClose setClose={setIsOpenModal} fontSize={matches600px ? 'small' : 'medium'} />
       <IconButton
-        sx={{ ...styleButton, right: '93%' }}
+        sx={{ ...styleButton, left: 1 }}
         onClick={() => setIndex((e) => (e === 0 ? images.length - 1 : e - 1))}
       >
         <ArrowBackIosIcon sx={{ fontSize: 30 }} />
@@ -64,7 +70,7 @@ function ModalImages({
         </CardCover>
       </Card>
       <IconButton
-        sx={{ ...styleButton }}
+        sx={{ ...styleButton, right: -3 }}
         onClick={() => setIndex((e) => (e === images.length - 1 ? 0 : e + 1))}
       >
         <ArrowForwardIosIcon sx={{ fontSize: 30 }} />

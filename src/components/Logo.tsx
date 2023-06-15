@@ -15,6 +15,7 @@ function Logo({ disable = false, sx }: ILogo) {
         alt='logo'
         width='100%'
         height='100%'
+        loading='lazy'
       />
     </Box>
   );

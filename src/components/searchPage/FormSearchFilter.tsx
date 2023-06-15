@@ -81,7 +81,7 @@ const optionLabelBed = optionBedType.map((e, i) => (
       alignItems='center'
       justifyContent='center'
     >
-      <img src={imageBed[i]} alt={e} width='30px' height='30px' />
+      <img src={imageBed[i]} alt={e} width='30px' height='30px' loading='lazy' />
     </Stack>
     <Typography component='span' variant='body1' ml={2} textTransform='capitalize'>
       {e} bed

@@ -95,7 +95,11 @@ function UploadAvatar({
                 '& img': { objectFit: 'cover', width: 1, height: 1 },
               }}
             >
-              <img alt='avatar' src={isString(file) ? file : file.preview} />
+              <img
+                alt='avatar'
+                src={isString(file) ? file : file.preview}
+                loading='lazy'
+              />
             </Box>
           )}
 
