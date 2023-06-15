@@ -52,7 +52,6 @@ function MainHeader({
   );
   const is2FA = useSelector((state: RootState) => state.auth.is2FA, shallowEqual);
   const orders = useSelector((state: RootState) => state.cart.cart?.orders, shallowEqual);
-
   // const { currentUser } = user;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -109,6 +108,10 @@ function MainHeader({
     } catch (error) {
       setAllCookie(true);
     }
+
+    // if (!is2FA) {
+    //   navigate('/');
+    // }
   }, []);
 
   React.useEffect(() => {

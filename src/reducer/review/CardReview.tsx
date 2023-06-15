@@ -7,7 +7,8 @@ import Grid from '@mui/material/Grid';
 import dayjs from 'dayjs';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from 'react-router-dom';
-
+import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { IReview } from '@/utils/interface';
 import { fDate, fToNow } from '@/utils/formatTime';
 import { customScrollbar } from '@/utils/utils';
@@ -22,6 +23,14 @@ const StyleGrid = {
   overflowX: 'hidden',
   ...customScrollbar,
 };
+
+const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+}));
+
 function CardReview({
   review,
   handelClick,
@@ -31,6 +40,8 @@ function CardReview({
   review: IReview;
   handelClick: (index: number) => void;
 }) {
+  const matches600px = useMediaQuery('(max-width:600px)');
+
   const navigate = useNavigate();
 
   const objectParams = {
@@ -46,9 +57,12 @@ function CardReview({
     objectParams
   ).toString()}`;
   return (
-    <Card key={review.slug} sx={{ p: 2, height: 'auto' }}>
-      <Stack flexDirection='row' columnGap={2}>
-        <Box width={280}>
+    <Card
+      key={review.slug}
+      sx={{ p: 2, height: 'auto', width: matches600px ? '85%' : '100%', mx: 'auto' }}
+    >
+      <ResponsiveStack flexDirection='row' columnGap={2} spacing={1}>
+        <Box width={matches600px ? '100%' : 280}>
           {review.starRating !== 0 && (
             <Typography variant='h5' color='primary'>
               Star Rating: {review.starRating}
@@ -88,41 +102,63 @@ function CardReview({
               {room.quantity} {room.name}
             </Typography>
           ))}
+          {matches600px && <Divider orientation='horizontal' sx={{ mt: 1 }} />}
           <Grid container spacing={1} sx={StyleGrid}>
             {review.images.map((img, indexImg) => (
-              <Grid item xs={4} key={indexImg} sx={{ with: '100%', height: 100 }}>
-                <img src={img} alt='imgReview' width='100%' height='100%' />
+              <Grid
+                item
+                xs={4}
+                key={indexImg}
+                sx={{
+                  height: matches600px ? 80 : 100,
+                }}
+              >
+                <img
+                  src={img}
+                  alt='imgReview'
+                  width={matches600px ? '90%' : '100%'}
+                  height='100%'
+                />
               </Grid>
             ))}
           </Grid>
         </Box>
         <Divider orientation='vertical' flexItem />
-        <Stack sx={{ flexGrow: 1, width: 500 }} alignItems='flex-end'>
-          <Box
+        <Stack
+          sx={{ flexGrow: 1, width: matches600px ? '100%' : 500 }}
+          alignItems='flex-end'
+        >
+          <Stack
             sx={{
               width: '100%',
               minHeight: 150,
               flexGrow: 1,
               border: 'solid 1px',
-              mb: 1,
               p: 1,
+              pl: 2,
               borderRadius: 5,
             }}
           >
-            <Typography variant='body1'>
+            <Box mb={1}>
+              <Typography variant='h5' textAlign='center' color='primary.dark'>
+                Content
+              </Typography>
+              <Divider />
+            </Box>
+            <Typography variant='body1' flexGrow={1}>
               {(review.context as string).length > 1 ? review.context : 'No content'}
             </Typography>
             <Typography textAlign='end' variant='body2' color='text.primary'>
               {fToNow(review.updatedAt)}
             </Typography>
-          </Box>
+          </Stack>
           <Box>
             <LoadingButton onClick={() => handelClick(i)}>
               {review.starRating ? 'edit' : 'Write review'}
             </LoadingButton>
           </Box>
         </Stack>
-      </Stack>
+      </ResponsiveStack>
     </Card>
   );
 }

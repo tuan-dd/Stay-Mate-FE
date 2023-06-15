@@ -16,6 +16,9 @@ import dayjs from 'dayjs';
 import cloneDeep from 'lodash/cloneDeep';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { debounce, isValidStartDate } from '@/utils/utils';
 import { urlImagesTrending } from '@/utils/images';
 import { IOrderRes } from '@/utils/interface';
@@ -24,6 +27,45 @@ import { RootState, useAppDispatch } from '@/app/store';
 import { fetchDeleteOrder, fetchUpdateOrder } from '@/reducer/cart/cart.slice';
 import { fDate } from '@/utils/formatTime';
 import { fetchCreateBooking } from '../payment/payment.slice';
+
+const ResponsiveStack = styled(Stack)(({ theme }) => ({
+  height: 300,
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    height: 'auto',
+    rowGap: 8,
+  },
+
+  [theme.breakpoints.down('sm')]: {},
+}));
+
+const ResponsiveStackTwo = styled(Stack)(({ theme }) => ({
+  flexDirection: 'column',
+  [theme.breakpoints.down('md')]: {
+    columnGap: 10,
+    flexDirection: 'row',
+    width: '100%',
+  },
+
+  [theme.breakpoints.down('sm')]: {},
+}));
+
+const ResponsiveStackThree = styled(Stack)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  [theme.breakpoints.down('sm')]: {},
+}));
+// const ResponsiveStackThree = styled(Stack)(({ theme }) => ({
+//   [theme.breakpoints.down('md')]: {
+//     flexDirection: 'column',
+//   },
+
+//   [theme.breakpoints.down('sm')]: {},
+// }));
 
 function FormCart({
   order,
@@ -38,6 +80,7 @@ function FormCart({
   i: number;
   handelDeleteOrder: (indexOrder: number) => void;
 }) {
+  const matchesMobile = useMediaQuery('(max-width:900px)');
   const [timeStay, setTimeStay] = React.useState<[string, string]>([
     fDate(order.startDate, 'YYYY-MM-DD'),
     fDate(order.endDate, 'YYYY-MM-DD'),
@@ -47,6 +90,7 @@ function FormCart({
   const errorMessage = useSelector(
     (state: RootState) => state.payment.errorMessageCreateBooking
   );
+
   const updateOrder = cloneDeep(order);
   const navigate = useNavigate();
   const indexOrderCreateBookingRef = React.useRef<boolean>(false);
@@ -119,10 +163,6 @@ function FormCart({
 
   const tDebounce = debounce(handelChangeQuantity, 700);
 
-  /// fun() =>
-
-  // tDebounce
-
   React.useEffect(() => {
     setIsErrorDate(!isValidStartDate(timeStay[0]));
   }, []);
@@ -130,8 +170,11 @@ function FormCart({
   return (
     <Stack p={1} spacing={2}>
       <Box>
-        <Stack flexDirection='row' columnGap={1} alignItems='center'>
-          <Box height='150px' maxWidth={200} minWidth={200}>
+        <ResponsiveStack flexDirection='row' columnGap={2} alignItems='center'>
+          <Box
+            height={matchesMobile ? '180px' : '150px'}
+            width={matchesMobile ? '65%' : 200}
+          >
             <img
               src={urlImagesTrending[i]}
               loading='lazy'
@@ -140,38 +183,60 @@ function FormCart({
               alt={order.hotelId.hotelName}
             />
           </Box>
-          <Box
+          <Divider orientation={matchesMobile ? 'horizontal' : 'vertical'} flexItem />
+          <ResponsiveStackTwo
+            spacing={2}
             sx={{
               flexGrow: 1,
-              display: 'flex',
               rowGap: 1,
-              flexDirection: 'column',
             }}
           >
-            <Typography>{order.hotelId.hotelName} </Typography>
-            <Typography>{order.hotelId.city} </Typography>
-            <Rating value={order.hotelId.star} size='small' readOnly />
+            <ResponsiveStackThree flexGrow={1}>
+              <Typography fontSize={matchesMobile ? 12 : 20} color='primary.dark'>
+                {order.hotelId.hotelName}{' '}
+              </Typography>
+              <Rating value={order.hotelId.star} size='small' readOnly />
+            </ResponsiveStackThree>
+            <Stack
+              spacing={2}
+              alignItems={matchesMobile ? 'center' : undefined}
+              flexGrow={1}
+            >
+              <DatePickerCustom
+                label='Start'
+                date={timeStay[0]}
+                onChangeDate={handelChangeTimeStay}
+              />
+              <DatePickerCustom
+                label='End'
+                date={timeStay[1]}
+                onChangeDate={handelChangeTimeStay}
+              />
+            </Stack>
             {isErrorDate && (
-              <Alert severity='warning' sx={{ bgcolor: 'transparent' }}>
+              <Alert
+                severity='warning'
+                icon={
+                  <PriorityHighIcon sx={{ display: matchesMobile ? 'none' : 'block' }} />
+                }
+                sx={{
+                  bgcolor: 'transparent',
+                  fontSize: matchesMobile ? 8 : 14,
+                  width: matchesMobile ? 180 : '100%',
+                  my: matchesMobile ? 'auto' : 0,
+                  p: 0,
+                }}
+              >
                 A start date must be equal to or greater than today`s date and an end date
                 is greater than the Start date
               </Alert>
             )}
-            <DatePickerCustom
-              label='Start'
-              date={timeStay[0]}
-              onChangeDate={handelChangeTimeStay}
-            />
-            <DatePickerCustom
-              label='End'
-              date={timeStay[1]}
-              onChangeDate={handelChangeTimeStay}
-            />
-          </Box>
+          </ResponsiveStackTwo>
+          <Divider orientation={matchesMobile ? 'horizontal' : 'vertical'} flexItem />
           <Stack
             spacing={1}
             sx={{
-              minWidth: 300,
+              minWidth: 200,
               alignItems: 'center',
               justifyContent: 'center',
               flexDirection: 'column',
@@ -202,7 +267,7 @@ function FormCart({
               </Button>
             )}
           </Stack>
-        </Stack>
+        </ResponsiveStack>
       </Box>
       <Divider />
       <Box>
@@ -220,7 +285,19 @@ function FormCart({
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     tDebounce(e, room.roomTypeId._id)
                   }
-                  sx={{ width: 80 }}
+                  sx={{
+                    width: matchesMobile ? 60 : 80,
+
+                    '.MuiFormLabel-root': {
+                      fontSize: matchesMobile ? 10 : 16,
+                    },
+                    '.MuiInputBase-root': {
+                      height: 40,
+                    },
+                    '.MuiInputBase-input': {
+                      fontSize: matchesMobile ? 12 : 14,
+                    },
+                  }}
                   inputProps={{
                     min: 0,
                     max: room.roomTypeId.numberOfRoom,
@@ -228,7 +305,8 @@ function FormCart({
                   }}
                 />
                 <Chip
-                  sx={{ bgcolor: 'primary.main', maxWidth: 150 }}
+                  sx={{ bgcolor: 'primary.main', fontSize: matchesMobile ? 8 : 12 }}
+                  size={matchesMobile ? 'small' : 'medium'}
                   label={room.roomTypeId.nameOfRoom}
                 />
               </Stack>

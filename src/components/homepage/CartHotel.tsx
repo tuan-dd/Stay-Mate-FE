@@ -4,12 +4,13 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import Chip from '@mui/joy/Chip';
 import Button from '@mui/joy/Button';
-import Typography from '@mui/joy/Typography';
+import Typography from '@mui/material/Typography';
 import Link from '@mui/joy/Link';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { IHotel, IRoom } from '@/utils/interface';
 import { fDate } from '@/utils/formatTime';
 import { urlImagesTrending } from '@/utils/images';
@@ -31,7 +32,7 @@ export default function CartHotel({
   data: IHotel<IRoom[]>;
   index: number;
 }) {
-  // const newDAte = fData
+  const matchesMobile = useMediaQuery('(max-width:550px)');
 
   const objectParams = {
     destination: data.hotelName,
@@ -113,12 +114,12 @@ export default function CartHotel({
       </Box>
       <Divider />
       <Stack gap={1} p={1} alignItems='center'>
-        <Chip sx={{ bgcolor: 'primary.main', maxWidth: 150 }}>
+        <Chip sx={{ bgcolor: 'primary.main' }} size={matchesMobile ? 'sm' : 'md'}>
           <Typography
             noWrap
             sx={{
               color: 'success.contrastText',
-              fontSize: '14px',
+              fontSize: matchesMobile ? 8 : 14,
               fontWeight: 'md',
             }}
           >
@@ -136,28 +137,37 @@ export default function CartHotel({
           <Chip
             variant='outlined'
             color='success'
-            size='sm'
+            size={matchesMobile ? 'sm' : 'md'}
             sx={{
               bgcolor: 'primary.dark',
               border: 1,
               borderColor: 'primary.dark',
               color: 'primary.contrastText',
               borderRadius: 'sm',
-              wordWrap: 'break-word',
+              maxWidth: matchesMobile ? 60 : 120,
             }}
           >
-            City: {data.city}
+            <Typography
+              noWrap
+              sx={{
+                color: 'success.contrastText',
+                fontSize: matchesMobile ? 8 : 14,
+              }}
+            >
+              City: {data.city}
+            </Typography>
           </Chip>
           <Link
             href='#dribbble-shot'
             level='body3'
             underline='none'
-            endDecorator={<StarRateIcon />}
+            endDecorator={<StarRateIcon fontSize={matchesMobile ? 'inherit' : 'large'} />}
             sx={{
               fontWeight: 'md',
               ml: 'auto',
               color: 'primary.dark',
               '&:hover': { color: 'danger.plainColor' },
+              fontSize: matchesMobile ? 10 : 14,
             }}
           >
             {data.star}

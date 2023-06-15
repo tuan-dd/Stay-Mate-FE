@@ -74,7 +74,7 @@ function Review() {
   }, [page, reviews, errorMessage]);
 
   return (
-    <Box ml={1}>
+    <Box>
       <ColorTabs
         numberBadge={[]}
         tabs={tabs}

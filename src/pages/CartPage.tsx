@@ -11,9 +11,12 @@ import { fetchDeleteOrder } from '@reducer/cart/cart.slice';
 import { EPackage } from '@utils/enum';
 import FormCart from '@reducer/cart/FormCart';
 import { fToNow } from '@utils/formatTime';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { RootState, useAppDispatch } from '@/app/store';
 
 function CartPage() {
+  const matchesMobile = useMediaQuery('(max-width:500px)');
   const navigate = useNavigate();
   const { cart } = useSelector((state: RootState) => state.cart, shallowEqual);
   const { targetBooking, isCreateBookingSuccess } = useSelector(
@@ -75,8 +78,8 @@ function CartPage() {
               <img
                 src='https://cdn6.agoda.net/images/kite-js/illustrations/athena/baggage/group.svg'
                 alt='icon'
-                width='100px'
-                height='100px'
+                width={matchesMobile ? '70px' : '100px'}
+                height={matchesMobile ? '70px' : '100px'}
               />
             </Box>
             <Typography>Your cart is empty</Typography>
