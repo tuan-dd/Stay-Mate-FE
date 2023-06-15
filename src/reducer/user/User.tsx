@@ -12,15 +12,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { RootState, useAppDispatch } from '@/app/store';
-import { FTextField, FUploadAvatar, FormProvider } from '@/components/formProvider';
-import { EStatusRedux } from '@/utils/enum';
+import { FTextField, FUploadAvatar, FormProvider } from '@components/formProvider';
+import { EStatusRedux } from '@utils/enum';
+import { Pros, deleteValueNull } from '@utils/utils';
 import { IUpdateUser, fetchUpdateUser } from './user.slice';
-import { Pros, deleteValueNull } from '@/utils/utils';
-import FormChargeAndWithdraw from './formChargeAndWithdraw';
+import { RootState, useAppDispatch } from '@/app/store';
+import FormChargeAndWithdraw from './FormChargeAndWithdraw';
 
 const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-// const hintMoneyCharge = [100, 500, 1000, 5000];
+
 const validDefaultValues = z
   .object({
     avatar: z.any(),
