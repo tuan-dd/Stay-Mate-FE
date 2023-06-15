@@ -23,9 +23,15 @@ export const ResponsiveStack = styled(Stack)(({ theme }) => ({
   },
 }));
 export const ResponsiveDiv = styled('div')(({ theme }) => ({
-  width: 400,
+  minWidth: 400,
   [theme.breakpoints.down('md')]: {
     width: '100%',
+  },
+}));
+
+export const ResponsiveTypography = styled(Typography)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    fontSize: 10,
   },
 }));
 
@@ -83,12 +89,7 @@ function CardHotel({
       <CardActionArea sx={{ width: '100%' }}>
         <ResponsiveStack flexDirection='row' columnGap={1}>
           <ResponsiveDiv>
-            <ImageList
-              variant='quilted'
-              cols={4}
-              rowHeight={45}
-              sx={{ m: 0, width: '100%' }}
-            >
+            <ImageList variant='quilted' cols={4} rowHeight={45} sx={{ m: 0 }}>
               {imagesHotel.slice(0, 4).map((item, i) => (
                 <ImageListItem
                   sx={{
@@ -99,7 +100,7 @@ function CardHotel({
                   rows={i === 0 ? 4 : 1}
                   onClick={() => setIsOpenModalImages(true)}
                 >
-                  <img src={item} alt={hotel.hotelName} loading='lazy' />
+                  <img src={item} alt={hotel.hotelName} loading='lazy' width='100%' />
                   <CardCover
                     sx={{
                       transition: 'all .30s ease-in-out',
@@ -117,7 +118,12 @@ function CardHotel({
                 rows={1}
                 onClick={() => setIsOpenModalImages(true)}
               >
-                <img src={imagesHotel[4]} alt={hotel.hotelName} loading='lazy' />
+                <img
+                  src={imagesHotel[4]}
+                  alt={hotel.hotelName}
+                  loading='lazy'
+                  width='100%'
+                />
                 <CardCover
                   sx={{
                     width: '100%',
@@ -154,28 +160,28 @@ function CardHotel({
           </ResponsiveDiv>
           <Stack flexDirection='row' flexGrow={1} p={1}>
             <Box
-              sx={{ flexGrow: 1 }}
+              sx={{ width: '45%' }}
               onClick={() => handelNavigateDetail(hotel._id, index)}
             >
               <Stack spacing={1} mt={1}>
-                <Typography>{hotel.hotelName}</Typography>
+                <ResponsiveTypography>{hotel.hotelName}</ResponsiveTypography>
                 <Rating readOnly value={hotel.star} size='small' />
-                <Typography>Address: {hotel.address}</Typography>
-                <Typography>Type: {hotel.propertyType}</Typography>
+                <ResponsiveTypography>Address: {hotel.address}</ResponsiveTypography>
+                <ResponsiveTypography>Type: {hotel.propertyType}</ResponsiveTypography>
               </Stack>
             </Box>
             <Divider orientation='vertical' flexItem />
             <Box
-              sx={{ minWidth: 230 }}
+              sx={{ width: '55%' }}
               onClick={() => handelNavigateDetail(hotel._id, index)}
             >
               <Stack justifyContent='space-around' alignItems='center' height='100%'>
                 <Box>
-                  <Typography>
+                  <ResponsiveTypography>
                     Star Rating:&nbsp;&nbsp;&nbsp;&nbsp;
                     <Typography
                       component='span'
-                      variant='h2'
+                      variant='h3'
                       fontWeight='600'
                       color='success.light'
                     >
@@ -183,24 +189,29 @@ function CardHotel({
                         ((hotel.starRating.starAverage / 5) * 10 + Number.EPSILON) * 100
                       ) / 100}
                     </Typography>
-                  </Typography>
+                  </ResponsiveTypography>
                   {hotel.starRating.countReview > 0 ? (
-                    <Typography> Review: {hotel.starRating.countReview}</Typography>
+                    <ResponsiveTypography>
+                      Review: {hotel.starRating.countReview}
+                    </ResponsiveTypography>
                   ) : (
-                    <Typography variant='body2'>There are no reviews yet</Typography>
+                    <ResponsiveTypography variant='body2'>
+                      There are no reviews yet
+                    </ResponsiveTypography>
                   )}
                 </Box>
-                <Typography
-                  variant='h4'
-                  fontWeight='500'
-                  color='#e12d2d'
-                  sx={{ filter: `brightness(170%)` }}
-                >
-                  <Typography component='span' variant='body2'>
-                    Lowest room rate:
+                <ResponsiveTypography>
+                  Lowest room rate:
+                  <Typography
+                    component='span'
+                    variant='h5'
+                    fontWeight='500'
+                    color='#e12d2d'
+                    sx={{ filter: `brightness(170%)` }}
+                  >
+                    &nbsp;{Math.round((priceSmallest + Number.EPSILON) * 100) / 100}$
                   </Typography>
-                  &nbsp;{Math.round((priceSmallest + Number.EPSILON) * 100) / 100}$
-                </Typography>
+                </ResponsiveTypography>
               </Stack>
             </Box>
           </Stack>

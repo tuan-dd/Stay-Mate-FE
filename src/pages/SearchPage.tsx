@@ -144,10 +144,6 @@ function SearchPage() {
     refCheckValue.current = data;
     isFetchNoData.current = false;
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
     setPage(1);
 
     const convertData: Pros<IQuery> = deleteValueNull(data);

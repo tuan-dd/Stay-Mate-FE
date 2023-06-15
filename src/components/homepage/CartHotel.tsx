@@ -114,12 +114,15 @@ export default function CartHotel({
       </Box>
       <Divider />
       <Stack gap={1} p={1} alignItems='center'>
-        <Chip sx={{ bgcolor: 'primary.main' }} size={matchesMobile ? 'sm' : 'md'}>
+        <Chip
+          sx={{ bgcolor: 'primary.main', maxWidth: matchesMobile ? 120 : 170 }}
+          size='sm'
+        >
           <Typography
             noWrap
             sx={{
               color: 'success.contrastText',
-              fontSize: matchesMobile ? 8 : 14,
+              fontSize: matchesMobile ? 10 : 12,
               fontWeight: 'md',
             }}
           >
@@ -137,21 +140,21 @@ export default function CartHotel({
           <Chip
             variant='outlined'
             color='success'
-            size={matchesMobile ? 'sm' : 'md'}
+            size='sm'
             sx={{
               bgcolor: 'primary.dark',
               border: 1,
               borderColor: 'primary.dark',
               color: 'primary.contrastText',
               borderRadius: 'sm',
-              maxWidth: matchesMobile ? 60 : 120,
+              maxWidth: matchesMobile ? 60 : 100,
             }}
           >
             <Typography
               noWrap
               sx={{
                 color: 'success.contrastText',
-                fontSize: matchesMobile ? 8 : 14,
+                fontSize: matchesMobile ? 8 : 12,
               }}
             >
               City: {data.city}

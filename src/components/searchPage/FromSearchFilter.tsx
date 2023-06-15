@@ -63,6 +63,7 @@ const ResponsiveStack = styled(Stack)(({ theme }) => ({
 }));
 
 export const ResponsiveDiv = styled(Box)(({ theme }) => ({
+  width: '100%',
   [theme.breakpoints.down('lg')]: {
     flexGrow: 1,
 
@@ -118,7 +119,7 @@ function FromSearchFilter({ handelReset }: { handelReset: () => void }) {
         </ResponsiveDiv>
         <ResponsiveDiv>
           <ResponsiveTypography>Bed Types</ResponsiveTypography>
-          <CustomDivider />
+          <CustomDivider sx={{ mb: 1.5 }} />
           <FRadioGroup
             name='bedType'
             options={optionBedType}
